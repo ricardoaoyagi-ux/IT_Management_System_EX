@@ -1,54 +1,54 @@
-# SIG — Sistema Interno de Gestão
+# IT MANAGEMENT SYSTEM
 
-Sistema web para gestão de uma equipe de sustentação (suporte a incidentes), com módulos adicionais de projetos e RH.
+Web system for managing a support team (incident support), with additional project and HR modules.
 
-Desenvolvido do zero, com Angular no front-end e Node.js/Express + MySQL no back-end.
+Built with Angular on the front-end and Node.js/Express + MySQL on the back-end.
 
-## Sobre este repositório
+## About this repository
 
-Este projeto foi originalmente desenvolvido para uso interno de uma empresa. Nomes e dados de empresas/clientes reais foram removidos ou substituídos por valores genéricos antes da publicação (veja "Sobre a sanitização" abaixo). O código é publicado aqui como portfólio.
+The code is published here as a portfolio piece.
 
-## Funcionalidades
+## Features
 
-- Login com MFA (TOTP) e captcha (reCAPTCHA)
-- Gestão de incidentes, problemas e RCA
-- Controle de SLA e justificativas de reabertura
-- Módulo de analistas, alocação, férias, plantão e skills
-- Timebox / capacity planning de projetos
-- Módulo de RH (candidatos, carga de horas)
-- Exportação de relatórios (Excel/CSV)
-- Multi-base: o sistema suporta múltiplas "contas" (bancos de dados) diferentes
+- Login with MFA (TOTP) and captcha (reCAPTCHA)
+- Incident, problem, and RCA management
+- SLA control and reopening justifications
+- Analyst, allocation, vacation, on-call, and skills module
+- Project timebox / capacity planning
+- HR module (candidates, hours tracking)
+- Report export (Excel/CSV)
+- Multi-tenant: the system supports multiple "accounts" (databases)
 
-## Tecnologias
+## Technologies
 
 - **Frontend:** Angular 19, Angular Material, Chart.js
 - **Backend:** Node.js, Express, MySQL2
-- **Autenticação:** bcrypt, TOTP (MFA), reCAPTCHA v2
+- **Authentication:** bcrypt, TOTP (MFA), reCAPTCHA v2
 
-## Como rodar localmente
+## Running locally
 
-### Pré-requisitos
+### Prerequisites
 
 - Node.js 18+
 - MySQL 8+
 
-### 1. Banco de dados
+### 1. Database
 
-Crie um banco de dados (ex: `empresa1`) e importe a estrutura. Duas opções:
+Create a database (e.g. `empresa1`) and import the structure. Two options:
 
 ```bash
-# Opção A: só a estrutura das tabelas, tudo vazio
+# Option A: table structure only, everything empty
 mysql -u root -p empresa1 < backend/schema.sql
 
-# Opção B (recomendado para testar): estrutura + tabelas de domínio/catálogo já
-# populadas (sistemas, módulos, status, tipos de problema, motivos, feriados...),
-# para a aplicação não abrir completamente vazia
+# Option B (recommended for testing): structure + domain/catalog tables already
+# populated (systems, modules, status, problem types, reasons, holidays...),
+# so the application doesn't open completely empty
 mysql -u root -p empresa1 < backend/seed.sql
 ```
 
-> Nenhum dos dois arquivos contém dados reais de incidentes, usuários, analistas ou apontamento de horas — só estrutura, e no caso do `seed.sql`, dados de catálogo genéricos.
+> Neither file contains real incident, user, analyst, or time-tracking data — only structure, and in the case of `seed.sql`, generic catalog data.
 
-Depois de importar, crie um usuário de teste para conseguir logar:
+After importing, create a test user so you can log in:
 
 ```bash
 cd backend
@@ -56,14 +56,14 @@ npm install
 node seed-test-user.js
 ```
 
-Isso cria o usuário **TESTE1** / senha **teste1** no banco (ajustável via variável `SEED_DB_NAME` se você usar um nome de banco diferente de `empresa1`).
+This creates the user **TESTE1** / password **teste1** in the database (adjustable via the `SEED_DB_NAME` variable if you use a database name other than `empresa1`).
 
 ### 2. Backend
 
 ```bash
 cd backend
 npm install
-cp .env.example .env   # ajuste host/usuário/senha do MySQL se necessário
+cp .env.example .env   # adjust MySQL host/user/password if needed
 node server.js
 ```
 
@@ -74,20 +74,6 @@ npm install
 ng serve --open
 ```
 
-A aplicação abre em `http://localhost:4200`. Na tela de login, selecione a conta correspondente ao banco que você criou.
+The application opens at `http://localhost:4200`. On the login screen, select the account matching the database you created.
 
-> Atalho para Windows: `sig.bat` sobe backend e frontend juntos.
-
-## Sobre a sanitização deste repositório
-
-Como este sistema foi usado internamente por uma empresa, antes de publicar o código:
-
-- Nomes reais de empresas/clientes foram substituídos por identificadores genéricos (`empresa1`, `empresa2`, `empresa3`, e os campos `Cliente`/`Fornecedor`).
-- Nomes de sistemas internos reais (usados no módulo de skills, no catálogo de sistemas/módulos e em um campo do módulo de plantão) foram generalizados para `Sistema A`, `Sistema B` etc.
-- A senha do banco de dados foi removida do código-fonte e movida para variável de ambiente (`.env`, não versionado — veja `backend/.env.example`).
-- A chave secreta do reCAPTCHA foi substituída pela chave pública de teste oficial do Google (sempre válida, sem custo/risco).
-- Nenhum dado real (incidentes, usuários, analistas, apontamento de horas, projetos) foi incluído. `backend/schema.sql` tem só a estrutura das tabelas; `backend/seed.sql` acrescenta apenas dados de catálogo/domínio genéricos, sem nada pessoal ou transacional.
-
-## Licença
-
-<!-- Defina aqui a licença desejada, por exemplo MIT, antes de tornar o repositório público. -->
+> Windows shortcut: `sig.bat` starts both backend and frontend.
