@@ -1,0 +1,6 @@
+
+
+npm install -- na pasta do backend
+
+npm install -- na pasta do frontend
+

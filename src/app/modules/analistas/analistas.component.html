@@ -1,0 +1,178 @@
+<div class="container">
+    <h2>Analistas</h2>
+
+  <!-- 🔒 FORMULÁRIO: exibe apenas se estiver editando -->
+   <!-- FORMULÁRIO DE EDIÇÃO INLINE -->
+   <div *ngIf="editingId" class="edit-card">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-analistas">
+
+      <div class="row">
+        <mat-form-field class="field-peq">
+          <mat-label>Matrícula</mat-label>
+          <input matInput formControlName="Matricula" type="number">
+        </mat-form-field>
+
+        <mat-form-field class="field-med">
+          <mat-label>Nome Usuário (SIG)</mat-label>
+          <input matInput formControlName="NOM_USUARIO_SIG" readonly>
+        </mat-form-field>
+        
+        <mat-form-field class="field-med">
+          <mat-label>Nome Completo</mat-label>
+          <input matInput formControlName="Nom_Analista">
+        </mat-form-field>
+
+        <mat-form-field class="field-med">
+          <mat-label>Líder / Gerente</mat-label>
+          <input matInput formControlName="Lider_Gerente">
+        </mat-form-field>
+
+        <mat-form-field class="field-med">
+          <mat-label>Cidade</mat-label>
+          <input matInput formControlName="CID_RESIDENCIA">
+        </mat-form-field>
+        <mat-form-field class="field-peq">
+          <mat-label>UF</mat-label>
+          <input matInput formControlName="UF_RESIDENCIA" maxlength="2">
+        </mat-form-field>
+                
+
+        <mat-form-field class="field-med">
+          <mat-label>ID Interno</mat-label>
+          <input matInput formControlName="Id_Fornecedor">
+        </mat-form-field>
+
+        <mat-form-field class="field-grd">
+          <mat-label>ID Cliente</mat-label>
+          <input matInput formControlName="Id_Cliente">
+        </mat-form-field>
+ 
+        <mat-form-field class="field-drpmed">
+          <mat-label>Alocação</mat-label>
+          <mat-select formControlName="Alocacao">
+            <mat-option *ngFor="let a of alocacoes" [value]="a.Cod_alocacao">
+              {{ a.Cod_alocacao }} - {{ a.Desc_alocacao }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="field-drpgrd">
+          <mat-label>Senioridade</mat-label>
+          <mat-select formControlName="Senioridade">
+            <mat-option *ngFor="let s of senioridades" [value]="s.ID_Senioridade">
+              {{ s.ID_Senioridade }} — {{ s.Cat }} — {{ s.Categoria }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="field-dat">
+          <mat-label>Início</mat-label>
+          <input matInput formControlName="Dt_Inicio" type="date">
+        </mat-form-field>
+
+        <mat-form-field class="field-dat">
+          <mat-label>Fim</mat-label>
+          <input matInput formControlName="Dt_Fim" type="date">
+        </mat-form-field> 
+      </div>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit" 
+        [disabled]="!editingId || form.invalid">
+        Salvar</button>
+        <button mat-raised-button color="warn" type="button" (click)="cancelarEdicao()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+      
+      
+
+    <table mat-table [dataSource]="lista" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="Id_Analista">
+        <th mat-header-cell *matHeaderCellDef>Id_Analista</th>
+        <td mat-cell *matCellDef="let e">{{ e.Id_Analista }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Matricula">
+        <th mat-header-cell *matHeaderCellDef>Matrícula</th>
+        <td mat-cell *matCellDef="let e">{{ e.Matricula }}</td>
+      </ng-container>
+      <ng-container matColumnDef="NOM_USUARIO_SIG">
+        <th mat-header-cell *matHeaderCellDef>Nome SIG</th>
+        <td mat-cell *matCellDef="let e">{{ e.NOM_USUARIO_SIG }}</td>
+      </ng-container>
+      
+
+      <ng-container matColumnDef="Nom_Analista">
+        <th mat-header-cell *matHeaderCellDef>Nome</th>
+        <td mat-cell *matCellDef="let e">{{ e.Nom_Analista }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Lider_Gerente">
+        <th mat-header-cell *matHeaderCellDef>Líder / Gerente</th>
+        <td mat-cell *matCellDef="let e">{{ e.Lider_Gerente }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="CID_RESIDENCIA">
+        <th mat-header-cell *matHeaderCellDef>Cidade</th>
+        <td mat-cell *matCellDef="let e">{{ e.CID_RESIDENCIA }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="UF_RESIDENCIA">
+        <th mat-header-cell *matHeaderCellDef>UF</th>
+        <td mat-cell *matCellDef="let e">{{ e.UF_RESIDENCIA }}</td>
+      </ng-container>
+      
+
+      <ng-container matColumnDef="Id_Fornecedor">
+        <th mat-header-cell *matHeaderCellDef>ID Interno</th>
+        <td mat-cell *matCellDef="let e">{{ e.Id_Fornecedor }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Id_Cliente">
+        <th mat-header-cell *matHeaderCellDef>ID Cliente</th>
+        <td mat-cell *matCellDef="let e">{{ e.Id_Cliente }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Alocacao">
+        <th mat-header-cell *matHeaderCellDef>Alocação</th>
+        <td mat-cell *matCellDef="let e">
+          {{ e.Alocacao }} — {{ e.AlocacaoDesc }}
+        </td>        
+      </ng-container>
+
+      <ng-container matColumnDef="Senioridade">
+        <th mat-header-cell *matHeaderCellDef>Senioridade</th>
+        <td mat-cell *matCellDef="let e">
+          {{ e.SenioridadeCod }} — {{ e.SenioridadeCat }} - {{ e.SenioridadeCatDesc }}
+        </td>        
+      </ng-container>
+      <!--
+      <ng-container matColumnDef="Rate">
+        <th mat-header-cell *matHeaderCellDef>Rate</th>
+        <td mat-cell *matCellDef="let e">{{ e.Rate }}</td>
+      </ng-container>
+      -->
+
+      <ng-container matColumnDef="Dt_Inicio">
+        <th mat-header-cell *matHeaderCellDef>Início</th>
+        <td mat-cell *matCellDef="let e">{{ e.Dt_Inicio }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Dt_Fim">
+        <th mat-header-cell *matHeaderCellDef>Fim</th>
+        <td mat-cell *matCellDef="let e">{{ e.Dt_Fim }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let e">
+          <button mat-button color="accent" (click)="editar(e)">Editar</button>
+          <button mat-button color="warn" (click)="deletar(e.Id_Analista!)">Excluir</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>

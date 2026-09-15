@@ -1,0 +1,52 @@
+<div class="login-container">
+  <h2>Sistema Interno de Gestão</h2>
+
+  <form (ngSubmit)="login()" class="login-form">
+
+    <div class="form-group">
+      <label for="base">Conta</label>
+      <select
+        id="base"
+        [(ngModel)]="base"
+        name="base"
+        required
+      >
+        <option value="" disabled selected>Selecione a Conta</option>
+        <option value="empresa3">EMPRESA 3</option>
+        <option value="empresa2">EMPRESA 2</option>
+        <option value="empresa1">EMPRESA 1</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="usuario">Usuário</label>
+      <input
+        id="usuario"
+        type="text"
+        [(ngModel)]="user"
+        name="user"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="senha">Senha</label>
+      <input
+        id="senha"
+        type="password"
+        [(ngModel)]="senha"
+        name="senha"
+        required
+      />
+    </div>
+<div class="form-group">
+ <div id="captcha"></div>
+</div>
+<button type="button" (click)="login()" class="btn-login">
+  Entrar
+</button>
+
+    
+
+  </form>
+</div>

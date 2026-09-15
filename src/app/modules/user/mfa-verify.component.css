@@ -1,0 +1,11 @@
+.mfa-verify-container {
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}

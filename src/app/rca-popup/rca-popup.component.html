@@ -1,0 +1,68 @@
+<div class="rca-container">
+  <!-- Coluna da Busca -->
+  <div class="rca-left">
+    <h3>Buscar RCA</h3>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Pesquisar RCA</mat-label>
+      <input matInput [formControl]="buscaControl" placeholder="Digite o RCA">
+    </mat-form-field>
+
+    <div class="rca-list-container">
+      <mat-radio-group [(ngModel)]="selectedRca" class="radio-column">
+        <mat-radio-button *ngFor="let r of resultados" [value]="r">
+          {{ r.Cod_RCA }} - {{ r.Desc_RCA }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <button mat-raised-button color="primary" [disabled]="!selectedRca" (click)="usarRCA()">
+      Usar RCA selecionado
+    </button>
+  </div>
+
+  <!-- Coluna do Cadastro -->
+  <div class="rca-right">
+    <h3>Cadastro</h3>
+    <form [formGroup]="form" class="rca-form">
+      <div class="form-row">
+        <mat-form-field appearance="fill">
+          <mat-label>Cod_RCA</mat-label>
+          <input matInput formControlName="Cod_RCA" [disabled]="true">
+        </mat-form-field>
+
+ 
+      </div>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Desc_RCA</mat-label>
+        <input matInput formControlName="Desc_RCA" placeholder="Descrição RCA">
+      </mat-form-field>
+
+      <div class="form-row">
+        <mat-form-field>
+          <mat-label>Data Início</mat-label>
+          <input matInput placeholder="Data Início" formControlName="Dt_Inicio" type="date">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Data Conclusão</mat-label>
+          <input matInput placeholder="Data Conclusão" formControlName="Dt_Conclusao" type="date">
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field>
+          <mat-label>Total Horas Desenvolvimento</mat-label>
+          <input matInput type="number" formControlName="Tot_Hors_dev" placeholder="Horas Desenvolvimento">
+        </mat-form-field>
+ 
+      </div>
+    </form>
+
+    <div class="form-buttons">
+      <button mat-button (click)="dialogRef.close()">Cancelar</button>
+      <button mat-raised-button color="primary" (click)="adicionar()">Adicionar</button>
+    </div>
+  </div>
+</div>

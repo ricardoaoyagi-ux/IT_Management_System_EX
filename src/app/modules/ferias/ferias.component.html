@@ -1,0 +1,197 @@
+<div class="container">
+    <h2>Férias/Ausencias/Licenças</h2>
+  
+    <!-- Quadro 1: Cadastro/Edição -->
+    <div class="quadro">
+      <h3>{{ editingId ? 'Editar' : 'Cadastrar' }}</h3>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-ferias">
+        <mat-form-field>
+          <mat-label>Matrícula</mat-label>
+          <input matInput formControlName="Matricula" type="number">
+        
+          <mat-error *ngIf="form.get('Matricula')?.hasError('required')">
+            Matrícula obrigatória
+          </mat-error>
+        
+          <mat-error *ngIf="form.get('Matricula')?.hasError('analistaInexistente')">
+            Matrícula não encontrada
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Nome Analista</mat-label>
+          <input matInput formControlName="Nom_Analista" [readonly]="true">
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Aquisitivo</mat-label>
+          <input matInput formControlName="Aquisitivo" type="number">
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Data Início</mat-label>
+          <input matInput formControlName="Dt_Inicio" type="date">
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Data Fim</mat-label>
+          <input matInput formControlName="Dt_Fim" type="date">
+        </mat-form-field>
+  
+        <mat-checkbox formControlName="Pendente">Pendente</mat-checkbox>
+  
+        <mat-form-field>
+          <mat-label>Sequência</mat-label>
+          <input matInput formControlName="Sequencia" type="number">
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Nota</mat-label>
+          <mat-select formControlName="Nota">
+            <mat-option value="Férias">Férias</mat-option>
+            <mat-option value="Licença">Licença</mat-option>
+            <mat-option value="Ausencia">Ausencia</mat-option>
+        </mat-select>
+        </mat-form-field>
+   
+        <div class="acoes-form">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="form.invalid">
+            {{ editingId ? 'Atualizar' : 'Adicionar' }}
+          </button>
+        
+          <!-- 🔄 Limpar só aparece no cadastro -->
+          <button
+            *ngIf="!editingId"
+            mat-raised-button
+            color="accent"
+            type="button"
+            (click)="limparFormulario()">
+            Limpar
+          </button>
+        
+          <button
+            *ngIf="editingId"
+            mat-raised-button
+            color="warn"
+            type="button"
+            (click)="cancelarEdicao()">
+            Cancelar
+          </button>
+        </div>
+
+      </form>
+    </div>
+  
+    <!-- Quadro 2: Buscar -->
+    <div class="quadro">
+      <h3>Buscar</h3>
+      <form [formGroup]="filtroForm" (ngSubmit)="buscar()" class="form-ferias">
+        <mat-form-field>
+          <mat-label>Nome Analista</mat-label>
+          <mat-select formControlName="Nom_Analista">
+            <mat-option value="">--Todos--</mat-option>
+            <mat-option *ngFor="let nome of analistas" [value]="nome">
+              {{ nome }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Data Início</mat-label>
+          <input matInput formControlName="Dt_Inicio" type="date">
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Pendente</mat-label>
+          <mat-select formControlName="Pendente">
+            <mat-option value="">--</mat-option>
+            <mat-option value="true">Sim</mat-option>
+            <mat-option value="false">Não</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <div class="botoes-busca">
+          <button mat-raised-button color="primary" type="submit">Buscar</button>
+          <button mat-raised-button color="warn" type="button" (click)="limparCampos()">Limpar Campos</button>
+        </div>
+      </form>
+    </div>
+  
+    <!-- Quadro 3: Resultado da Busca -->
+    <div class="quadro">
+      <h3>Resultado</h3>
+      <table mat-table [dataSource]="lista" class="mat-elevation-z8">
+        <!-- Colunas permanecem iguais -->
+        <ng-container matColumnDef="Id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element">{{element.Id}}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Matricula">
+          <th mat-header-cell *matHeaderCellDef> Matrícula </th>
+          <td mat-cell *matCellDef="let element">{{element.Matricula}}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Nom_Analista">
+          <th mat-header-cell *matHeaderCellDef> Analista </th>
+          <td mat-cell *matCellDef="let element">{{element.Nom_Analista}}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Aquisitivo">
+          <th mat-header-cell *matHeaderCellDef> Aquisitivo </th>
+          <td mat-cell *matCellDef="let element">{{element.Aquisitivo}}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Dt_Inicio">
+          <th mat-header-cell *matHeaderCellDef> Data Início </th>
+          <td mat-cell *matCellDef="let element">{{element.Dt_Inicio}}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Dt_Fim">
+          <th mat-header-cell *matHeaderCellDef> Data Fim </th>
+          <td mat-cell *matCellDef="let element">{{element.Dt_Fim}}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Pendente">
+          <th mat-header-cell *matHeaderCellDef> Pendente </th>
+          <td mat-cell *matCellDef="let element">{{element.Pendente ? 'Sim' : 'Não'}}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Sequencia">
+          <th mat-header-cell *matHeaderCellDef> Sequência </th>
+          <td mat-cell *matCellDef="let element">{{element.Sequencia}}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Nota">
+          <th mat-header-cell *matHeaderCellDef> Nota </th>
+          <td mat-cell *matCellDef="let element">{{element.Nota}}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="Usr_Cadastro">
+          <th mat-header-cell *matHeaderCellDef> Usuário Cadastro </th>
+          <td mat-cell *matCellDef="let element">{{element.Usr_Cadastro}}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="Dt_Cadastro">
+          <th mat-header-cell *matHeaderCellDef> Data Cadastro </th>
+          <td mat-cell *matCellDef="let element">{{element.Dt_Cadastro}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Ações </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button color="accent" (click)="editar(element)">Editar</button>
+            <button mat-button color="warn" (click)="deletar(element.Id)">Excluir</button>
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+  

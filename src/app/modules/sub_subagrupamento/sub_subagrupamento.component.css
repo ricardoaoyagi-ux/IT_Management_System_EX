@@ -1,0 +1,6 @@
+.container { padding: 20px; padding-top: 60px; }
+.quadro { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+.form-sub { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+mat-form-field { width: 180px; }
+table { width: 100%; }
+.botoes-busca { display: flex; gap: 10px; align-items: center; }

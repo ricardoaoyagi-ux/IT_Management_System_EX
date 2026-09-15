@@ -1,0 +1,22 @@
+<div class="mfa-setup-container">
+  <h2>Configurar MFA</h2>
+
+  <p>Escaneie o QR Code abaixo usando seu app de autenticação:</p>
+
+  <div *ngIf="loading">Carregando QR Code...</div>
+
+  <img *ngIf="qrCodeDataUrl" [src]="qrCodeDataUrl" alt="QR Code MFA" />
+
+  <form [formGroup]="form" (ngSubmit)="confirmTOTP()">
+    <mat-form-field>
+      <mat-label>Digite o código do app</mat-label>
+      <input matInput formControlName="code" maxlength="6" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+      Confirmar
+    </button>
+  </form>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+</div>

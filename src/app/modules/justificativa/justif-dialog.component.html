@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>{{ data.titulo }}</h2>
+
+<div mat-dialog-content>
+  <p><strong>Código do Incidente:</strong> {{ data.cod_incidente }}</p>
+  <p><strong>Solucionador:</strong> {{ data.Solucionador }}</p>
+  <p><strong>Data Resolução:</strong> {{ data.data }}</p>
+ 
+  <!-- DROPDOWN DE MOTIVO -->
+  <mat-form-field appearance="fill" style="width: 100%; margin-top: 10px;">
+    <mat-label>Motivo</mat-label>
+    <mat-select [(ngModel)]="motivoId">
+      <mat-option *ngFor="let m of motivos" [value]="m.cod_motivo">
+        {{ m.descricao }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" style="width: 100%; margin-top: 10px;">
+    <mat-label>Justificativa</mat-label>
+    <textarea 
+      matInput
+      [(ngModel)]="obs"
+      maxlength="500"
+      rows="6"
+      placeholder="Digite a justificativa..."></textarea>
+
+    <!-- Contador de caracteres -->
+    <mat-hint align="end" [style.color]="obs.length === 500 ? 'red' : 'inherit'">
+      {{ obs.length }}/500
+    </mat-hint>
+
+    <!-- Mensagem de limite atingido -->
+    <div *ngIf="obs.length === 500" style="color:red; font-weight:bold; margin-top:5px;">
+      Limite de caracteres atingido!
+    </div>
+
+  </mat-form-field>
+
+
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button 
+  mat-raised-button 
+  color="primary" 
+  (click)="salvar()"
+  [disabled]="!obs || obs.trim().length === 0 || !motivoId">
+  Salvar
+</button>
+</div>

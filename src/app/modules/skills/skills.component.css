@@ -1,0 +1,293 @@
+/* ===========================
+   CONTAINER PRINCIPAL
+=========================== */
+.sidenav-container {
+  height: 100vh;
+  width: 100vw;
+  background-color: #ffffff; /* fundo branco */
+  padding: 60px 20px 20px; /* top já incluído */
+}
+
+.container {
+  padding: 16px;
+  background-color: #ffffff; /* fundo branco */
+}
+
+/* Remove scroll horizontal da tabela */
+mat-sidenav-content {
+  overflow-x: hidden;
+}
+
+/* ===========================
+   SIDENAV / CARD
+=========================== */
+.sidenav {
+  width: 70vw;
+  max-width: 1000px;  
+  background-color: #f0f0f0; /* cinza bem claro */
+  color: #2f3e46;            /* cinza escuro */
+}
+
+.sidenav mat-toolbar {
+  background-color: #e0e0e0; /* cinza claro */
+  color: #2f3e46;
+}
+
+.card-content {
+  padding: 16px; 
+  overflow-y: auto;
+  color: #2f3e46;
+  margin-bottom: 20px;
+}
+
+/* ===========================
+   CARD HEADER
+=========================== */
+.card-header {
+  display: flex;
+  justify-content: center; /* centraliza o conjunto */
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 0 8px;
+  background-color: #fdfdfd; /* quase branco */
+}
+
+.header-info {
+  display: flex;
+  flex-direction: column;
+  text-align: right; /* texto alinhado à direita */
+  gap: 16px;
+  font-size: 20px;
+  flex: 1; /* ocupa o máximo possível à esquerda */ 
+  background-color: #fdfdfd; /* quase branco */
+}
+
+.header-hexagon {
+  margin-top: 20px;
+  width: 500px;   /* ajusta o tamanho do canvas */
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  text-align: left; /* texto alinhado à direita */
+  align-items: center;
+  flex-shrink: 0; /* não deixa encolher */
+  background-color: #fdfdfd; /* quase branco */
+  margin-bottom: 20px;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px; 
+  margin-bottom: 8px; 
+}
+
+/* ===========================
+   SKILLS GRID
+=========================== */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px 24px;
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.skill-label {
+  font-size: 13px;
+  white-space: nowrap;
+  color: #2f3e46; /* cinza escuro */
+}
+
+.skill-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.skill-value {
+  width: 20px;
+  text-align: center;
+  font-weight: bold;
+  color: #2f3e46; /* cinza escuro */
+}
+
+/* ===========================
+   BARRA DE SKILL
+=========================== */
+.skill-bar,
+.skill-row mat-progress-bar {
+  width: 100px;
+  height: 20px;
+  margin: 0 8px;
+  vertical-align: middle;
+}
+
+/* ===========================
+   BOTÕES E ÍCONES
+=========================== */
+.mat-icon,
+button.mat-button,
+button.mat-raised-button {
+  color: #2f3e46; /* cinza escuro */
+}
+
+button.mat-raised-button.mat-warn {
+  background-color: #d32f2f; /* vermelho escuro */
+  color: #ffffff;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* ===========================
+   RESPONSIVO
+=========================== */
+@media (max-width: 1200px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-header {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+/* Toolbar título */
+.toolbar-search {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 16px;
+  background-color: #fdfdfd !important; /* quase branco */
+}
+
+.toolbar-title {
+  font-size: 1.4rem;
+  font-weight: 600; 
+  color: #2f3e46;
+}
+
+/* Linha de filtros abaixo do título */
+.toolbar-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* quebra linha em telas pequenas */
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #fdfdfd; /* leve contraste */
+  border-radius: 4px;
+  color: #2f3e46;
+}
+
+/* Dropdowns */
+.search-dropdown {
+  width: 180px;      /* horizontal maior */
+  font-size: 0.9rem;
+  color: #2f3e46;
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+.mat-form-field-flex {
+  height: 32px;
+}
+
+.mat-select-trigger {
+  height: 32px;
+  line-height: 32px;
+  color: #2f3e46;
+}
+
+/* Botões compactos */
+.btn-search, .btn-clear {
+  height: 32px;
+  font-size: 0.85rem;
+  color: #2f3e46;
+}
+
+/* ===========================
+   TABELA RESULTADOS DINÂMICOS
+=========================== */
+.table-wrapper {
+  margin-top: 16px;
+  overflow-x: auto;
+  font-size: 20px !important; /* ou 1rem */
+}
+
+/* Tabela MDC */
+.mat-mdc-table {
+  background-color: #f0f0f0 !important; /* cinza claro */
+}
+
+/* Header */
+.mat-mdc-header-row {
+  background-color: #e0e0e0 !important; /* cinza médio */
+  color: #2f3e46 !important;
+}
+
+/* Linhas */
+.mat-mdc-row,
+.mdc-data-table__row {
+  background-color: #f0f0f0 !important; /* cinza claro */
+}
+
+/* Células */
+.mat-mdc-cell,
+.mat-mdc-header-cell,
+.mdc-data-table__cell {
+  background-color: transparent !important;
+  color: #2f3e46;
+}
+
+/* ===========================
+   Forçar cores dos valores de skill - fundo branco
+=========================== */
+.skill-3 {
+  color: #1976d2 !important; /* azul médio */
+  font-weight: 700;
+}
+
+.skill-4 {
+  color: #f57c00 !important; /* laranja vibrante */
+  font-weight: 800;
+}
+
+.skill-5 {
+  color: #d32f2f !important; /* vermelho escuro */
+  font-weight: 900;
+}
+
+/* =========================== CORES POR NÍVEL DE SKILL =========================== */ 
+.skill-3 .skill-value { color: #1976d2; font-weight: 700; } 
+.skill-4 .skill-value { color: #f57c00; font-weight: 800; } 
+.skill-5 .skill-value { color: #d32f2f; font-weight: 900; }
+
+/* Barras de progresso correspondentes */
+.mat-progress-bar-yellow .mat-progress-bar-fill::after {
+  background-color: #1976d2 !important;
+}
+
+.mat-progress-bar-orange .mat-progress-bar-fill::after {
+  background-color: #f57c00 !important;
+}
+
+.mat-progress-bar-red .mat-progress-bar-fill::after {
+  background-color: #d32f2f !important;
+}
+ 

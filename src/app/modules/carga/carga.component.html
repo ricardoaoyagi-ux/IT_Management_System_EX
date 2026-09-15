@@ -1,0 +1,90 @@
+<div class="carga-container">
+
+  <!-- 🔹 CARGA DE INCIDENTES -->
+  <mat-card class="carga-card">
+    <mat-card-title>Importar Incidentes (CSV)</mat-card-title>
+
+    <mat-card-content>
+      <input type="file" accept=".csv" (change)="onFileSelected($event)" />
+
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="importCSV()"
+        [disabled]="loading"
+      >
+        Importar CSV
+      </button>
+
+      <div *ngIf="loading" class="progress-area">
+        <mat-progress-bar
+          mode="determinate"
+          [value]="progress">
+        </mat-progress-bar>
+
+        <p>{{ processed }} / {{ total }} registros processados</p>
+      </div>
+
+      <p class="message">{{ message }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- 🔹 CARGA JUSTIFICATIVA SLA -->
+  <mat-card class="carga-card">
+    <mat-card-title>Importar Justificativa de SLA (XLSX)</mat-card-title>
+
+    <mat-card-content>
+      <input
+        type="file"
+        accept=".xlsx"
+        (change)="onSlaFileSelected($event)"
+      />
+
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="importJustificativaSLA()" 
+      >
+        Importar SLA
+      </button>
+
+      <p class="hint">
+        Formato esperado: cod_incidente | seq | data_resolved. 
+      </p>
+      <p class="hint">
+                      Ex:    IM00021584	| 1   |	19/11/2024  09:18:00
+      </p>
+      <p class="slaMessage">{{ slaMessage }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- 🔹 CARGA JUSTIFICATIVA REABERTURA -->
+  <mat-card class="carga-card">
+    <mat-card-title>Importar Justificativa de Reabertura (XLSX)</mat-card-title>
+
+    <mat-card-content>
+      <input
+        type="file"
+        accept=".xlsx"
+        (change)="onReaberturaFileSelected($event)"
+      />
+
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="importJustificativaReabertura()" 
+      >
+        Importar Reabertura
+      </button>
+
+      <p class="hint">
+        Formato esperado: cod_incidente | seq | data_reabertura. 
+      </p>
+      <p class="hint">
+                      Ex:    IM00021584	| 1   |	19/11/2024  09:18:00
+      </p>
+      <p class="reabMessage">{{ reabMessage }}</p>
+    </mat-card-content>
+  </mat-card>
+
+</div>

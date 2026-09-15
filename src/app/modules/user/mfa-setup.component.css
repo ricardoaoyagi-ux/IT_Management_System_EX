@@ -1,0 +1,23 @@
+.mfa-setup-container {
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.mfa-setup-container img {
+  margin: 20px 0;
+  width: 200px;
+  height: 200px;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
+.mfa-setup-container form {
+  display: flex;
+  flex-direction: column; /* força elementos em coluna */
+  gap: 16px; /* espaço entre input e botão */
+}

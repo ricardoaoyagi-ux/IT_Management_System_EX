@@ -1,0 +1,61 @@
+<div class="container">
+    <h2>Checklists Pendentes</h2>
+
+    <table mat-table
+           [dataSource]="dataSource"
+           matSort
+           matSortDisableClear
+           [hidden]="loading"
+           class="mat-elevation-z8">
+
+      <!-- Solucionador -->
+      <ng-container matColumnDef="solucionador">
+        <th mat-header-cell *matHeaderCellDef rowspan="2"> Solucionador </th>
+        <td mat-cell *matCellDef="let element"> {{element.solucionador}} </td>
+      </ng-container>
+
+      <!-- > 90 dias -->
+      <ng-container matColumnDef="pendentes90">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>PENDENTES ACIMA 90 dias </th>
+        <td mat-cell *matCellDef="let element"> {{element.pendentes90}} </td>
+      </ng-container>
+
+      <!-- > 60 e <= 90 -->
+      <ng-container matColumnDef="pendentes60a90">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>PENDENTES ACIMA 60 dias</th>
+        <td mat-cell *matCellDef="let element"> {{element.pendentes60a90}} </td>
+      </ng-container>
+
+      <!-- > 30 e <= 60 -->
+      <ng-container matColumnDef="pendentes30a60">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>PENDENTES ACIMA 30 dias</th>
+        <td mat-cell *matCellDef="let element"> {{element.pendentes30a60}} </td>
+      </ng-container>
+
+      <!-- <= 30 -->
+      <ng-container matColumnDef="pendentes30">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>PENDENTES ATE 30 dias </th>
+        <td mat-cell *matCellDef="let element"> {{element.pendentes30}} </td>
+      </ng-container>
+
+      <!-- Total Pendentes -->
+      <ng-container matColumnDef="pendentes">
+        <th mat-header-cell *matHeaderCellDef rowspan="2" mat-sort-header>TOTAL Pendentes </th>
+        <td mat-cell *matCellDef="let element"> {{element.pendentes}} </td>
+      </ng-container>
+
+      <!-- Concluídos -->
+      <ng-container matColumnDef="concluidos">
+        <th mat-header-cell *matHeaderCellDef rowspan="2" mat-sort-header>TOTAL Concluídos 30 dias </th>
+        <td mat-cell *matCellDef="let element"> {{element.concluidos}} </td>
+      </ng-container>
+
+      <!-- Header row -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <!-- Data rows -->
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-spinner *ngIf="loading" style="margin: 50px auto; display: block;"></mat-spinner>
+  </div>

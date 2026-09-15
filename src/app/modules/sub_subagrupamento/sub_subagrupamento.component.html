@@ -1,0 +1,170 @@
+
+<div class="container">
+    <h2>Sub-Sub-Agrupamento</h2>
+  
+    <!-- Quadro 1: Cadastro / Edição -->
+    <div class="quadro">
+      <h3>{{ editingId ? 'Editar' : 'Cadastrar' }}</h3>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-sub">
+        <mat-form-field>
+            <mat-select placeholder="Cod Sistema" formControlName="cod_sistema" (selectionChange)="onSistemaChange($event.value)">
+              <mat-option *ngFor="let s of sistemas" [value]="s.Id_aplicacao">
+                {{ s.nom_aplicacao }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select placeholder="Cod Módulo" formControlName="Cod_Modulo" (selectionChange)="onModuloChange($event.value)">
+              <mat-option *ngFor="let m of modulos" [value]="m.cod_modulo">
+                {{ m.nom_modulo }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          
+          <mat-form-field>
+            <mat-select placeholder="Cod Agrupamento" formControlName="cod_agrupamento" (selectionChange)="onAgrupamentoChange($event.value)">
+              <mat-option *ngFor="let a of agrupamentos" [value]="a.cod_agrupamento">
+                {{ a.nom_agrupamento }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>         
+
+          <mat-form-field>
+            <mat-select placeholder="Cod Sub-Agrupamento" formControlName="cod_subagrupamento"  (selectionChange)="onSubAgrupamentoChange($event.value)">
+              <mat-option *ngFor="let sa of subAgrupamentos" [value]="sa.cod_subagrupamento">
+                {{ sa.nom_subagrupamento }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>          
+  
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Cód. Sub-Sub-Agrupamento</mat-label>
+          
+            <input
+              matInput
+              type="number"
+              formControlName="cod_subsubagrupamento"
+              placeholder="Gerado automaticamente"
+              [disabled]=true
+            > 
+          </mat-form-field>
+  
+        <mat-form-field>
+          <input matInput placeholder="Nome Sub-Sub-Agrupamento" formControlName="nom_subsubagrupamento">
+        </mat-form-field>
+  
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+          {{ editingId ? 'Atualizar' : 'Adicionar' }}
+        </button>
+  
+        <button *ngIf="editingId"
+                mat-raised-button
+                color="warn"
+                type="button"
+                (click)="cancelarEdicao()">
+          Cancelar
+        </button>
+      </form>
+    </div>
+  
+    <!-- Quadro 2: Busca -->
+    <div class="quadro">
+      <h3>Buscar</h3>
+      <form [formGroup]="filtroForm" (ngSubmit)="buscar()" class="form-sub">
+        <mat-form-field>
+            <mat-select placeholder="Cod Sistema" formControlName="cod_sistema" (selectionChange)="onFiltroSistemaChange($event.value)">
+              <mat-option *ngFor="let s of sistemas" [value]="s.Id_aplicacao">
+                {{ s.nom_aplicacao }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          
+          <mat-form-field>
+            <mat-select placeholder="Cod Módulo" formControlName="Cod_Modulo" (selectionChange)="onFiltroModuloChange($event.value)">
+              <mat-option *ngFor="let m of filtroModulos" [value]="m.cod_modulo">
+                {{ m.nom_modulo }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          
+          <mat-form-field>
+            <mat-select placeholder="Cod Agrupamento" formControlName="cod_agrupamento" (selectionChange)="onFiltroAgrupamentoChange($event.value)">
+              <mat-option *ngFor="let a of filtroAgrupamentos" [value]="a.cod_agrupamento">
+                {{ a.nom_agrupamento }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          
+          <mat-form-field>
+            <mat-select placeholder="Cod Sub-Agrupamento" formControlName="cod_subagrupamento">
+              <mat-option *ngFor="let sa of filtroSubAgrupamentos" [value]="sa.cod_subagrupamento">
+                {{ sa.nom_subagrupamento }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>         
+  
+        <div class="botoes-busca">
+          <button mat-raised-button color="primary" type="submit" [disabled]="filtroForm.invalid">Buscar</button>
+          <button mat-raised-button color="warn" type="button" (click)="limparFiltro()">Limpar</button>
+        </div>
+      </form>
+    </div>
+  
+    <!-- Quadro 3: Resultado da busca -->
+    <div class="quadro" *ngIf="lista.length > 0">
+        <h3>Resultado</h3>
+        <table mat-table [dataSource]="lista" class="mat-elevation-z8">
+      
+          <!-- Sistema -->
+          <ng-container matColumnDef="nome_sistema">
+            <th mat-header-cell *matHeaderCellDef> Sistema </th>
+            <td mat-cell *matCellDef="let e"> {{ e.nome_sistema }} </td>
+          </ng-container>
+      
+          <!-- Módulo -->
+          <ng-container matColumnDef="nome_modulo">
+            <th mat-header-cell *matHeaderCellDef> Módulo </th>
+            <td mat-cell *matCellDef="let e"> {{ e.nome_modulo }} </td>
+          </ng-container>
+      
+          <!-- Agrupamento -->
+          <ng-container matColumnDef="nome_agrupamento">
+            <th mat-header-cell *matHeaderCellDef> Agrupamento </th>
+            <td mat-cell *matCellDef="let e"> {{ e.nome_agrupamento }} </td>
+          </ng-container>
+      
+          <!-- Sub-Agrupamento -->
+          <ng-container matColumnDef="nome_subagrupamento">
+            <th mat-header-cell *matHeaderCellDef> Sub-Agrupamento </th>
+            <td mat-cell *matCellDef="let e"> {{ e.nome_subagrupamento }} </td>
+          </ng-container>
+      
+          <!-- Sub-Sub-Agrupamento -->
+          <ng-container matColumnDef="cod_subsubagrupamento">
+            <th mat-header-cell *matHeaderCellDef> Cod Sub-Sub-Agrupamento </th>
+            <td mat-cell *matCellDef="let e"> {{ e.cod_subsubagrupamento }} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="nom_subsubagrupamento">
+            <th mat-header-cell *matHeaderCellDef> Nome Sub-Sub-Agrupamento </th>
+            <td mat-cell *matCellDef="let e"> {{ e.nom_subsubagrupamento }} </td>
+          </ng-container>
+      
+          <!-- Ações -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Ações </th>
+            <td mat-cell *matCellDef="let e">
+              <button mat-button color="accent" (click)="editar(e)">Editar</button>
+              <button mat-button color="warn" (click)="deletar(e.Id!)">Excluir</button>
+            </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsWithActions"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsWithActions;"></tr>
+      
+        </table>
+      </div>
+      
+  
+  </div>

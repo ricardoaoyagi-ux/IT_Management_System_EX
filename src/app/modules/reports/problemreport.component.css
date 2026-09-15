@@ -1,0 +1,48 @@
+.container { 
+    padding: 20px; 
+    padding-top: 60px; 
+  }
+  
+  .filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-start; /* Alinha todos os itens pelo topo */
+  }
+  
+  /* Campos de filtro */
+  .filtro-field {
+    width: 220px;
+    border-radius: 10px;
+  }
+  
+  /* MatFormField arredondado */
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    border-radius: 10px;
+  }
+  
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    border-color: #3f51b5;
+  }
+  
+  /* Container dos botões alinhado à direita e alinhado ao topo */
+  .botoes-filtro {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-left: auto; /* empurra para a direita */
+    align-items: flex-start; /* força alinhamento ao topo */
+  }
+  
+  /* Botões arredondados e altura consistente com os campos */
+  button.mat-raised-button {
+    border-radius: 8px;
+    text-transform: none;
+    font-weight: 500;
+    min-width: 130px;
+    height: 56px; /* mesma altura dos mat-form-field */
+  }
+  .campo-busca {
+    width: 350px;
+    margin-bottom: 15px;
+  }

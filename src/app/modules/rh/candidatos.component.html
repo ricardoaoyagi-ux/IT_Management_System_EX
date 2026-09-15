@@ -1,0 +1,26 @@
+<mat-card>
+  <h2>Importação de Horas Extras</h2>
+
+  <input type="file" (change)="onFileSelected($event)" accept=".xlsx, .xls" />
+
+  <br /><br />
+
+  <button mat-raised-button color="primary" (click)="previewExcel()">
+    Ler Arquivo
+  </button>
+
+  <button mat-raised-button color="accent" (click)="enviarBackend()" [disabled]="!rows.length">
+    Enviar para Backend
+  </button>
+
+  <br /><br />
+
+  <mat-progress-bar *ngIf="loading" mode="determinate" [value]="progress"></mat-progress-bar>
+
+  <p>{{ message }}</p>
+
+  <div *ngIf="rows.length > 0">
+    <h3>Preview (primeiras 5 linhas)</h3>
+    <pre>{{ rows.slice(0,5) | json }}</pre>
+  </div>
+</mat-card>

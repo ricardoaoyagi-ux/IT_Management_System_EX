@@ -1,0 +1,195 @@
+<mat-sidenav-container class="sidenav-container">
+
+  <!-- Barra lateral -->
+  <mat-sidenav #drawer mode="over" position="end" class="drawer" [opened]="drawerOpen">
+    <div class="drawer-content" *ngIf="ktSelecionado || editando">
+
+      <!-- Título -->
+<h3>{{ editando ? 'Novo KT' : (ktSelecionado ? ktSelecionado.titulo : '') }}</h3>
+
+      <!-- Formulário de Edição -->
+      <form *ngIf="editando" [formGroup]="form">
+
+        <mat-form-field appearance="fill">
+          <mat-label>Título</mat-label>
+          <input matInput formControlName="titulo">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Descrição</mat-label>
+          <textarea matInput formControlName="descricao"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Participantes</mat-label>
+          <textarea matInput formControlName="participantes"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Responsável</mat-label>
+          <input matInput formControlName="responsavel_kt">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Área Origem</mat-label>
+          <input matInput formControlName="area_origem">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Área Destino</mat-label>
+          <input matInput formControlName="area_destino">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Data de Envio</mat-label>
+          <input matInput [matDatepicker]="pickerEnvio" formControlName="data_envio">
+          <mat-datepicker-toggle matSuffix [for]="pickerEnvio"></mat-datepicker-toggle>
+          <mat-datepicker #pickerEnvio></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Data de Realização</mat-label>
+          <input matInput [matDatepicker]="pickerRealizacao" formControlName="data_realizacao">
+          <mat-datepicker-toggle matSuffix [for]="pickerRealizacao"></mat-datepicker-toggle>
+          <mat-datepicker #pickerRealizacao></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status_kt">
+            <mat-option value="AGENDADO">Agendado</mat-option>
+            <mat-option value="REALIZADO">Realizado</mat-option>
+            <mat-option value="ACEITO">Aceito</mat-option>
+            <mat-option value="REJEITADO">Rejeitado</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Aceito</mat-label>
+          <mat-select formControlName="aceito">
+            <mat-option value="S">Sim</mat-option>
+            <mat-option value="N">Não</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Data de Aceite</mat-label>
+          <input matInput [matDatepicker]="pickerAceite" formControlName="data_aceite">
+          <mat-datepicker-toggle matSuffix [for]="pickerAceite"></mat-datepicker-toggle>
+          <mat-datepicker #pickerAceite></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Observação</mat-label>
+          <textarea matInput formControlName="observacao_aceite"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Início Vigência</mat-label>
+          <input matInput [matDatepicker]="pickerVigencia" formControlName="data_inicio_vigencia">
+          <mat-datepicker-toggle matSuffix [for]="pickerVigencia"></mat-datepicker-toggle>
+          <mat-datepicker #pickerVigencia></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Link Material</mat-label>
+          <input matInput formControlName="link_material">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Link Gravação</mat-label>
+          <input matInput formControlName="link_gravacao">
+        </mat-form-field>
+
+      </form>
+
+<!-- Visualização -->
+<div *ngIf="ktSelecionado && !editando">
+  <section>
+    <p><strong>Descrição:</strong> {{ ktSelecionado.descricao || '-' }}</p>
+    <p><strong>Participantes:</strong> {{ ktSelecionado.participantes || '-' }}</p>
+    <p><strong>Responsável pelo KT:</strong> {{ ktSelecionado.responsavel_kt || '-' }}</p>
+    <p><strong>Implantado por:</strong> {{ ktSelecionado.area_origem || '-' }}</p>
+    <p><strong>Área Destino:</strong> {{ ktSelecionado.area_destino || '-' }}</p>
+  </section>
+
+  <section>
+    <p><strong>Data de Envio:</strong> {{ ktSelecionado.data_envio ? (ktSelecionado.data_envio | date:'dd/MM/yyyy') : '-' }}</p>
+    <p><strong>Data de Agendamento/Realização:</strong> {{ ktSelecionado.data_realizacao ? (ktSelecionado.data_realizacao | date:'dd/MM/yyyy') : '-' }}</p>
+    <p><strong>Status:</strong> {{ ktSelecionado.status_kt || '-' }}</p>
+    <p><strong>Aceito:</strong> {{ ktSelecionado.aceito || '-' }}</p>
+    <p><strong>Data de Aceite:</strong> {{ ktSelecionado.data_aceite ? (ktSelecionado.data_aceite | date:'dd/MM/yyyy') : '-' }}</p>
+    <p><strong>Observação:</strong> {{ ktSelecionado.observacao_aceite || '-' }}</p>
+    <p><strong>Início Vigência:</strong> {{ ktSelecionado.data_inicio_vigencia ? (ktSelecionado.data_inicio_vigencia | date:'dd/MM/yyyy') : '-' }}</p>
+  </section>
+
+  <section>
+    <p><strong>Material:</strong> {{ ktSelecionado.link_material || '-' }}</p>
+    <p><strong>Gravação:</strong> {{ ktSelecionado.link_gravacao || '-' }}</p>
+  </section>
+</div>
+
+
+      <!-- Botões -->
+      <div class="drawer-buttons">
+        <button mat-raised-button color="primary" *ngIf="!editando" (click)="iniciarEdicao()">Editar</button>
+        <button mat-raised-button color="accent" *ngIf="editando" (click)="salvarEdicao()" [disabled]="form.invalid">Salvar</button>
+        <button mat-raised-button color="warn" (click)="cancelarEdicao()">Cancelar</button>
+      <!-- Botão Excluir só aparece se houver KT selecionado -->
+  <button *ngIf="ktSelecionado" mat-button color="accent" (click)="confirmarExclusao()">
+    Excluir
+  </button>
+    
+    </div>
+
+    </div>
+  </mat-sidenav>
+
+  <!-- Conteúdo principal -->
+  <div class="main-content">
+    <div class="header-agenda">
+      <h2>Agenda de KTs</h2>
+      <button mat-raised-button color="primary" (click)="adicionarKT()">Adicionar KT</button>
+    </div>
+
+    <!-- filtro por status -->
+    <mat-form-field>
+      <mat-select placeholder="Status" [(value)]="statusSelecionado" (selectionChange)="carregar()">
+        <mat-option value="AGENDADO">Agendado</mat-option>
+        <mat-option value="REALIZADO">Realizado</mat-option>
+        <mat-option value="ACEITO">Aceito</mat-option>
+        <mat-option value="REJEITADO">Rejeitado</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <table mat-table [dataSource]="lista" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="titulo">
+        <th mat-header-cell *matHeaderCellDef>Título</th>
+        <td mat-cell *matCellDef="let kt" (click)="abrirDrawer(kt.cod_kt)" class="clickable">
+          {{ kt.titulo }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="area_destino">
+        <th mat-header-cell *matHeaderCellDef>Modulo</th>
+        <td mat-cell *matCellDef="let kt">{{ kt.area_destino }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="data_realizacao">
+        <th mat-header-cell *matHeaderCellDef>Data de Agendamento/Realização</th>
+        <td mat-cell *matCellDef="let kt">{{ kt.data_realizacao | date:'dd/MM/yyyy' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status_kt">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let kt">{{ kt.status_kt }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+  </div>
+
+</mat-sidenav-container>

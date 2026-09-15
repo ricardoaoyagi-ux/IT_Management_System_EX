@@ -1,0 +1,146 @@
+[
+  {
+    "name": "agrupamento",
+    "fields": [
+      { "name": "cod_Sistema", "type": "number" },
+      { "name": "cod_Modulo", "type": "number" },
+      { "name": "cod_agrupamento", "type": "number" },
+      { "name": "nom_agrupamento", "type": "string" }
+    ]
+  },
+  {
+    "name": "alocacao",
+    "fields": [
+      { "name": "cod_alocacao", "type": "number" },
+      { "name": "desc_alocacao", "type": "string" }
+    ]
+  },
+  {
+    "name": "analistas",
+    "fields": [
+      { "name": "matricula", "type": "number" },
+      { "name": "nom_Analista", "type": "string" },
+      { "name": "id_Fornecedor", "type": "string" },
+      { "name": "id_Cliente", "type": "string" },
+      { "name": "alocacao", "type": "string" },
+      { "name": "senioridade", "type": "string" },
+      { "name": "rate", "type": "number" },
+      { "name": "dt_Inicio", "type": "string" },
+      { "name": "dt_Fim", "type": "string" }
+    ]
+  },
+  {
+    "name": "aplicacoes",
+    "fields": [
+      { "name": "id_aplicacao", "type": "number" },
+      { "name": "nom_Aplicacao", "type": "string" }
+    ]
+  },
+  {
+    "name": "ferias",
+    "fields": [
+      { "name": "matricula", "type": "number" },
+      { "name": "nom_Analista", "type": "string" },
+      { "name": "aquisitivo", "type": "number" },
+      { "name": "dt_Inicio", "type": "string" },
+      { "name": "dt_Fim", "type": "string" },
+      { "name": "pendente", "type": "boolean" },
+      { "name": "sequencia", "type": "number" },
+      { "name": "nota", "type": "string" }
+    ]
+  },
+  {
+    "name": "inc_problem",
+    "fields": [
+      { "name": "cod_Problem", "type": "number" },
+      { "name": "id_Incidente", "type": "number" }
+    ]
+  },
+  {
+    "name": "incidente",
+    "fields": [
+      { "name": "id_Incidente", "type": "string" },
+      { "name": "sistema", "type": "number" },
+      { "name": "modulo", "type": "string" },
+      { "name": "tip_Solicitacao", "type": "string" },
+      { "name": "desc_Incidente", "type": "string" },
+      { "name": "dt_Abertura", "type": "string" },
+      { "name": "dt_Resolucao", "type": "string" }
+    ]
+  },
+  {
+    "name": "modulo",
+    "fields": [
+      { "name": "cod_Sistema", "type": "number" },
+      { "name": "cod_Modulo", "type": "number" },
+      { "name": "nom_Modulo", "type": "string" }
+    ]
+  },
+  {
+    "name": "problems",
+    "fields": [
+      { "name": "cod_Problem", "type": "number" },
+      { "name": "nom_Problem", "type": "string" },
+      { "name": "desc_Problem", "type": "string" },
+      { "name": "status", "type": "number" },
+      { "name": "tip_Problem", "type": "number" }
+    ]
+  },
+  {
+    "name": "rates",
+    "fields": [
+      { "name": "rate", "type": "number" },
+      { "name": "valor", "type": "number" },
+      { "name": "especialidade", "type": "string" }
+    ]
+  },
+  {
+    "name": "rca",
+    "fields": [
+      { "name": "cod_RCA", "type": "number" },
+      { "name": "cod_Problem", "type": "number" },
+      { "name": "desc_RCA", "type": "string" }
+    ]
+  },
+  {
+    "name": "sistema",
+    "fields": [
+      { "name": "cod_Sistema", "type": "number" },
+      { "name": "nom_Sistema", "type": "string" }
+    ]
+  },
+  {
+    "name": "skills",
+    "fields": [
+      { "name": "matricula", "type": "number" },
+      { "name": "nom_Analista", "type": "string" },
+      { "name": "sistemaA", "type": "number" },
+      { "name": "angular", "type": "number" },
+      { "name": "java", "type": "number" }
+    ]
+  },
+  {
+    "name": "status_problem",
+    "fields": [
+      { "name": "status", "type": "number" },
+      { "name": "desc_Status", "type": "string" }
+    ]
+  },
+  {
+    "name": "sub_agrupamento",
+    "fields": [
+      { "name": "cod_sistema", "type": "number" },
+      { "name": "cod_Modulo", "type": "number" },
+      { "name": "cod_agrupamento", "type": "number" },
+      { "name": "cod_subagrupamento", "type": "number" },
+      { "name": "nom_subagrupamento", "type": "string" }
+    ]
+  },
+  {
+    "name": "tip_problem",
+    "fields": [
+      { "name": "tip_Problem", "type": "number" },
+      { "name": "desc_Tip_Problem", "type": "string" }
+    ]
+  }
+]

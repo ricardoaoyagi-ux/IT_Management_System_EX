@@ -1,0 +1,30 @@
+.edit-card {
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fafafa;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+  transition: all 0.3s ease;
+}
+
+.row {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.field-peq { width: 120px; }
+.field-med { width: 150px; }
+.field-grd { width: 400px; }
+.field-dat { width: 130px; }
+.field-drpmed { width: 200px; }
+.field-drpgrd { width: 350px; }
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}

@@ -1,0 +1,5 @@
+.container { padding: 20px; padding-top: 60px;}
+.form-problems { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+mat-form-field { width: 150px; }
+table { width: 100%; }
+button { margin-right: 5px; }

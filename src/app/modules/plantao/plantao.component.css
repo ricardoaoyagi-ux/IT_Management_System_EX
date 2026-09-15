@@ -1,0 +1,14 @@
+.container { padding: 20px; padding-top: 60px;}
+.form-plantao { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+mat-form-field { width: 150px; }
+table { width: 100%; }
+button { margin-right: 5px; }
+
+mat-form-field {
+width: 150px; /* antigo */
+}
+
+/* Adicionar uma classe específica para o período */
+.form-plantao mat-form-field.periodo {
+width: 300px; /* aumenta para ficar legível */
+}

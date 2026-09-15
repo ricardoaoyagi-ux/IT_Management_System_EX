@@ -1,0 +1,21 @@
+.container {
+    padding: 60px;
+  }
+  
+  .filtros {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  
+  .filtro-field {
+    min-width: 200px;
+  }
+  
+  .botoes-filtro {
+    display: flex;
+    gap: 12px;
+    margin: 20px 0;
+  }
+  

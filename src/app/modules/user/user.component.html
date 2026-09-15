@@ -1,0 +1,93 @@
+<div style="padding: 20px; padding-top: 60px;">
+  <h2>Cadastro de Usuário</h2>
+
+  <div class="edit-card" *ngIf="isEditing || !isEditing">
+    <form [formGroup]="form" (ngSubmit)="saveUser()">
+
+      <!-- LINHA 1: AnalistaId | Perfil -->
+      <div class="row">
+        <mat-form-field class="field-med">
+          <mat-label>Analista ID</mat-label>
+          <input matInput formControlName="AnalistaId">
+        </mat-form-field>
+
+        <mat-form-field class="field-drpmed">
+          <mat-label>Perfil</mat-label>
+          <mat-select formControlName="Perfil">
+            <mat-option *ngFor="let p of perfilOptions" [value]="p.id">
+              {{ p.id }} - {{ p.nome }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+ 
+        <mat-form-field class="field-grd">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="Username" [disabled]="isEditing">
+        </mat-form-field>
+
+        <mat-form-field class="field-grd">
+          <mat-label>Senha</mat-label>
+          <input matInput formControlName="PasswordHash" type="password">
+        </mat-form-field>
+
+      <!-- BOTÕES -->
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit">
+          {{ isEditing ? 'Atualizar' : 'Criar' }}
+        </button>
+        <button mat-button type="button" (click)="cancelEdit()">Cancelar</button>
+      </div>
+    </div>
+
+    </form>
+  </div>
+
+  <table mat-table [dataSource]="users" class="mat-elevation-z8" style="margin-top: 20px; width: 100%;">
+
+    <ng-container matColumnDef="Id">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let user">{{ user.Id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="AnalistaId">
+      <th mat-header-cell *matHeaderCellDef>AnalistaId</th>
+      <td mat-cell *matCellDef="let user">{{ user.AnalistaId }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Perfil">
+      <th mat-header-cell *matHeaderCellDef>Perfil</th>
+      <td mat-cell *matCellDef="let user">
+        {{ user.Perfil }} - {{ perfilMap[user.Perfil] || 'Desconhecido' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Username">
+      <th mat-header-cell *matHeaderCellDef>Username</th>
+      <td mat-cell *matCellDef="let user">{{ user.Username }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Ações</th>
+      <td mat-cell *matCellDef="let user">
+        <button mat-button color="primary" (click)="editUser(user)">Editar</button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="MFA">
+  <th mat-header-cell *matHeaderCellDef>MFA</th>
+  <td mat-cell *matCellDef="let user">
+    <!-- Indicador de MFA ativo/inativo -->
+    <span [ngClass]="{'active-mfa': user.MFAAtivo, 'inactive-mfa': !user.MFAAtivo}">
+      {{ user.MFAAtivo ? 'Ativo' : 'Inativo' }}
+    </span>
+    <!-- Botão resetar MFA só se estiver ativo -->
+    <button mat-mini-button color="warn" *ngIf="user.MFAAtivo" (click)="onResetMFA(user)">
+      Resetar MFA
+    </button>
+  </td>
+</ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

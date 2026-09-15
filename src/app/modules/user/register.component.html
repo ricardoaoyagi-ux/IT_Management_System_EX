@@ -1,0 +1,18 @@
+<h2>Cadastro de Usuário</h2>
+<form [formGroup]="registerForm" (ngSubmit)="register()">
+  <input formControlName="AnalistaId" placeholder="AnalistaId">
+  <input formControlName="Perfil" placeholder="Perfil">
+  <input formControlName="Username" placeholder="Username">
+  <input formControlName="Password" type="password" placeholder="Senha">
+  <button type="submit">Cadastrar</button>
+</form>
+
+<p>{{ message }}</p>
+
+<!-- Validações simples -->
+<div *ngIf="registerForm.get('Username')?.invalid && registerForm.get('Username')?.touched">
+  Username deve ter pelo menos 3 caracteres
+</div>
+<div *ngIf="registerForm.get('Password')?.invalid && registerForm.get('Password')?.touched">
+  Senha deve ter pelo menos 6 caracteres
+</div>

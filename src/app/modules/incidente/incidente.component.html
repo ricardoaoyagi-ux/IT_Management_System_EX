@@ -1,0 +1,45 @@
+<div class="container">
+    <h2>Consulta de Incidentes</h2>
+    <div class="filtro-topo" style="margin-bottom: 10px;">
+      <mat-checkbox [(ngModel)]="apenasMeus" (change)="carregar()">
+        Apenas meus incidentes
+      </mat-checkbox>
+    </div>
+    <table mat-table [dataSource]="lista" class="mat-elevation-z8">
+  
+        <ng-container matColumnDef="Id_Incidente">
+            <th mat-header-cell *matHeaderCellDef> ID Incidente </th>
+            <td mat-cell *matCellDef="let element">
+              <a [routerLink]="['/app/incidente', element.Id_Incidente]">
+                {{ element.Id_Incidente }}
+              </a>
+            </td>
+          </ng-container>
+  
+      <ng-container matColumnDef="Cod_Classificacao1">
+        <th mat-header-cell *matHeaderCellDef> Classificação </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.Cod_Classificacao1 }}
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Dt_Resolucao">
+        <th mat-header-cell *matHeaderCellDef> Data Resolução </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.Dt_Resolucao }}
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Solucionador">
+        <th mat-header-cell *matHeaderCellDef> Solucionador </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.Solucionador }}
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+    </table>
+  </div>
+  

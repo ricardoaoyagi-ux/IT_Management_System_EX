@@ -1,0 +1,90 @@
+<div class="rca-container">
+    <!-- Coluna da Busca -->
+    <div class="rca-left">
+      <h3>Buscar Problem</h3>
+  
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Pesquisar Problem</mat-label>
+        <input matInput
+               [formControl]="buscaControl"
+               placeholder="Digite o código ou descrição">
+      </mat-form-field>
+  
+      <div class="rca-list-container">
+        <mat-radio-group [(ngModel)]="selectedProblem" class="radio-column">
+          <mat-radio-button *ngFor="let p of resultados" [value]="p">
+            {{ p.Cod_Problem }} - {{ p.Nom_Problem }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+  
+      <button mat-raised-button
+              color="primary"
+              [disabled]="!selectedProblem"
+              (click)="usarProblem()">
+        Usar Problem selecionado
+      </button>
+    </div>
+  
+    <!-- Coluna do Cadastro -->
+    <div class="rca-right">
+      <h3>Cadastro</h3>
+  
+      <form [formGroup]="form" class="rca-form">
+  
+        <div class="form-row">
+          <mat-form-field appearance="fill">
+            <mat-label>Cod_Problem</mat-label>
+            <input matInput formControlName="Cod_Problem" [disabled]="true">
+          </mat-form-field>
+        </div>
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Nome do Problem</mat-label>
+          <input matInput
+                 formControlName="Nom_Problem"
+                 placeholder="Nome do Problem">
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Descrição do Problem</mat-label>
+          <input matInput
+                 formControlName="Desc_Problem"
+                 placeholder="Descrição do Problem">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Tipo do Problem</mat-label>
+          <mat-select formControlName="Tip_Problem">
+            <mat-option [value]="1">SEV1 ou Cadenas</mat-option>
+            <mat-option [value]="2">Recorrente / Demais incidentes</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Analista Cadastro</mat-label>
+          <input matInput
+                 formControlName="Analista_Cadastro"
+                 [disabled]="true">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Analista Responsável</mat-label>
+          <input matInput
+                 formControlName="Analista_Responsavel"
+                 placeholder="Digite o responsável">
+        </mat-form-field>
+  
+      </form>
+  
+      <div class="form-buttons">
+        <button mat-button (click)="dialogRef.close()">Cancelar</button>
+        <button mat-raised-button
+                color="primary"
+                (click)="adicionar()">
+          Adicionar
+        </button>
+      </div>
+    </div>
+  </div>
+  

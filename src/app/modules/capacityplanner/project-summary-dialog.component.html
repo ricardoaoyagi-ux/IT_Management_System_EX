@@ -1,0 +1,54 @@
+<h2>
+  {{ projeto.nome }} / {{ projeto.status }}
+</h2>
+
+<div class="section">
+  <strong>Descrição</strong>
+  <p>{{ projeto.descricao }}</p>
+</div>
+
+<div class="row">
+  <div>
+    <strong>Horas Previstas:</strong> {{ resumo.horasPrevistas }}
+  </div>
+  <div>
+    <strong>Horas Consumidas:</strong> {{ resumo.horasConsumidas }}
+  </div>
+</div>
+
+<div class="row">
+  <div>
+    <strong>Data Início:</strong> {{ projeto.dataInicio | date }}
+  </div>
+  <div>
+    <strong>Data Fim:</strong> {{ projeto.dataFim | date }}
+  </div>
+  <div>
+    <strong>Data Fim Real:</strong> {{ projeto.dataFimReal | date }}
+  </div>
+</div>
+
+<hr>
+
+<h3>Participantes</h3>
+
+<div *ngFor="let p of resumo.participantes">
+  <strong>{{ p.nome }}</strong> :
+  {{ p.horasAlocadas }}h alocado
+  ({{ p.horasUteis }}h úteis)
+</div>
+
+<hr>
+
+<div class="totais">
+  <div>
+    <strong>Total Horas Alocadas:</strong>
+    {{ resumo.totalHorasAlocadas }}h
+  </div>
+  <div>
+    <strong>Total Horas Úteis:</strong>
+    {{ resumo.totalHorasUteis }}h
+  </div>
+</div>
+
+<button mat-button (click)="fechar()">Fechar</button>

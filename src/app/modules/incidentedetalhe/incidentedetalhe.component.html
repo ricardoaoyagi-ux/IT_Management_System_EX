@@ -1,0 +1,297 @@
+<div class="container"
+     style="max-width:1100px;
+            margin:auto;
+            background:#fafafa;
+            padding:18px 22px;
+            padding-top: 30px;
+            border-radius:6px;">
+
+  <!-- Título -->
+  <h2 style="margin-bottom:18px;
+             color:#3f51b5;
+             border-bottom:1px solid #ddd;
+             padding-bottom:6px;">
+    Detalhe do Incidente
+  </h2>
+
+  <form [formGroup]="form" (ngSubmit)="salvar()" class="form-incidente">
+
+<!-- ID Incidente + Status -->
+<div class="form-row"
+     style="display:flex;
+            gap:16px;
+            margin-bottom:14px;
+            flex-wrap:wrap;">
+
+  <!-- ID Incidente -->
+  <div style="display:flex; flex-direction:column; flex:1; min-width:200px;">
+    <label style="font-size:12px; color:#666; margin-bottom:2px;">
+      ID Incidente
+    </label>
+    <input matInput
+           formControlName="Id_Incidente"
+           readonly
+           style="background:#f3f3f3;">
+  </div>
+
+  <!-- Status -->
+  <div style="display:flex; flex-direction:column; max-width:180px;">
+    <label style="font-size:12px; color:#666; margin-bottom:2px;">
+      Status
+    </label>
+    <input matInput formControlName="St">
+  </div>
+
+</div>
+
+    <!-- Datas + Solucionador -->
+    <div class="form-row"
+         style="display:flex;
+                gap:12px;
+                padding:10px;
+                background:#ffffff;
+                border:1px solid #e0e0e0;
+                border-radius:4px;
+                margin-bottom:18px;
+                flex-wrap:wrap;">
+
+      <div style="display:flex; flex-direction:column; max-width:140px;">
+        <label style="font-size:12px; color:#555; margin-bottom:2px;">Data Abertura</label>
+        <input matInput type="date" formControlName="Dt_Abertura" readonly style="background:#f3f3f3;">
+      </div>
+
+      <div style="display:flex; flex-direction:column; max-width:140px;">
+        <label style="font-size:12px; color:#555; margin-bottom:2px;">Data Resolução</label>
+        <input matInput type="date" formControlName="Dt_Resolucao" readonly style="background:#f3f3f3;">
+      </div>
+
+      <div style="display:flex; flex-direction:column; max-width:140px;">
+        <label style="font-size:12px; color:#555; margin-bottom:2px;">Data Carga</label>
+        <input matInput type="date" formControlName="Dt_Carga" readonly style="background:#f3f3f3;">
+      </div>
+
+      <div style="display:flex; flex-direction:column; flex:1;">
+        <label style="font-size:12px; color:#555; margin-bottom:2px;">Solucionador</label>
+        <input matInput formControlName="Solucionador" readonly style="background:#f3f3f3;">
+      </div>
+    </div>
+
+    <!-- Tipo Solicitação -->
+    <div class="form-row" style="margin-bottom:14px;">
+      <mat-form-field appearance="fill" subscriptSizing="dynamic" style="width:100%;">
+        <mat-label>Tipo Solicitação</mat-label>
+        <mat-select formControlName="Tip_Solicitacao">
+          <mat-option value="Erro de Dados">Erro de Dados</mat-option>
+          <mat-option value="Erro Sistêmico">Erro Sistêmico</mat-option>
+          <mat-option value="Dúvida Funcional">Dúvida Funcional</mat-option>
+          <mat-option value="Performance">Performance</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+<!-- Sistema + Módulo -->
+<div class="form-row"
+     style="display:flex;
+            gap:16px;
+            margin-bottom:18px;
+            flex-wrap:wrap;">
+
+  <!-- Sistema (maior) -->
+  <mat-form-field appearance="fill"
+                  subscriptSizing="dynamic"
+                  style="flex:2; min-width:280px;">
+    <mat-label>Sistema</mat-label>
+    <mat-select formControlName="Sistema">
+      <mat-option *ngFor="let s of sistemas" [value]="s.Id_aplicacao">
+         {{s.nom_aplicacao}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Módulo (menor) -->
+  <mat-form-field appearance="fill"
+                  subscriptSizing="dynamic"
+                  style="flex:1; min-width:200px;">
+    <mat-label>Módulo</mat-label>
+    <mat-select formControlName="Modulo">
+      <mat-option *ngFor="let m of modulos" [value]="m.cod_modulo">
+         {{m.nom_modulo}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>
+
+
+    <!-- Título Classificações -->
+    <div style="margin:8px 0 6px;
+                font-weight:500;
+                color:#3f51b5;">
+      Classificações
+    </div>
+
+    <!-- Classificações -->
+    <div class="form-row"
+         style="display:flex;
+                gap:12px;
+                flex-wrap:wrap;
+                margin-bottom:18px;">
+
+<mat-form-field appearance="fill" style="flex:1; min-width:160px;">
+  <mat-label>Classificação 1</mat-label>
+
+  <mat-select formControlName="Cod_Classificacao1">
+
+    <!-- 🔹 search precisa estar dentro de mat-option -->
+    <mat-option disabled>
+      <ngx-mat-select-search
+        [formControl]="classificacao1FilterCtrl"
+        placeholderLabel="Pesquisar..."
+        noEntriesFoundLabel="Nenhum resultado encontrado">
+      </ngx-mat-select-search>
+    </mat-option>
+
+    <!-- 🟢 opções filtradas -->
+    <mat-option *ngFor="let a of filteredClassificacao1  | async" [value]="a.cod_agrupamento">
+      {{a.nom_agrupamento}}
+    </mat-option>
+
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="fill" style="flex:1; min-width:160px;">
+  <mat-label>Classificação 2</mat-label>
+
+  <mat-select formControlName="Cod_Classificacao2">
+
+    <!-- 🔹 search precisa estar dentro de mat-option -->
+    <mat-option disabled>
+      <ngx-mat-select-search
+        [formControl]="classificacao2FilterCtrl"
+        placeholderLabel="Pesquisar..."
+        noEntriesFoundLabel="Nenhum resultado encontrado">
+      </ngx-mat-select-search>
+    </mat-option>
+
+    <!-- 🟢 opções filtradas -->
+    <mat-option *ngFor="let a of filteredClassificacao2  | async" [value]="a.cod_subagrupamento">
+      {{a.nom_subagrupamento}}
+    </mat-option>
+
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="fill" style="flex:1; min-width:160px;">
+  <mat-label>Classificação 3</mat-label>
+
+  <mat-select formControlName="Cod_Classificacao3">
+
+    <!-- 🔹 search precisa estar dentro de mat-option -->
+    <mat-option disabled>
+      <ngx-mat-select-search
+        [formControl]="classificacao3FilterCtrl"
+        placeholderLabel="Pesquisar..."
+        noEntriesFoundLabel="Nenhum resultado encontrado">
+      </ngx-mat-select-search>
+    </mat-option>
+
+    <!-- 🟢 opções filtradas -->
+    <mat-option *ngFor="let a of filteredClassificacao3  | async" [value]="a.cod_subsubagrupamento">
+      {{a.nom_subsubagrupamento}}
+    </mat-option>
+
+  </mat-select>
+</mat-form-field>
+     
+    <!--
+      <div class="form-row" style="margin-bottom:14px;">
+        <label style="font-weight:500; margin-bottom:4px; display:block;">
+          Classificação 3
+        </label>
+        <textarea matInput formControlName="Cod_Classificacao3" rows="4"></textarea>
+      </div>
+    -->
+    <!-- <mat-form-field appearance="fill" subscriptSizing="dynamic" style="flex:1; min-width:160px;">
+         <mat-label>Classificação 3</mat-label>
+        <mat-select formControlName="Cod_Classificacao3">
+          <mat-option *ngFor="let s of subagrupamentos" [value]="s.cod_subagrupamento">
+            {{s.cod_subagrupamento}} - {{s.nom_subagrupamento}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    -->
+    </div>
+
+    <!-- Descrição Incidente -->
+    <div class="form-row" style="margin-bottom:14px;">
+      <label style="font-weight:500; margin-bottom:4px; display:block;">
+        Descrição do Incidente
+      </label>
+      <textarea matInput formControlName="Desc_Incidente" rows="4"></textarea>
+    </div>
+
+    <!-- Descrição Resolução -->
+    <div class="form-row" style="margin-bottom:18px;">
+      <label style="font-weight:500; margin-bottom:4px; display:block;">
+        Descrição da Resolução
+      </label>
+      <textarea matInput formControlName="Desc_Resolucao" rows="3"></textarea>
+    </div>
+
+
+    <!-- Container geral -->
+<div class="form-row"
+style="display:flex; gap:16px; margin-bottom:18px; align-items:center; flex-wrap:wrap;">
+
+<!-- Checkbox RCA -->
+<mat-checkbox formControlName="RCA" (change)="onRcaCheckboxChange($event)">
+RCA
+</mat-checkbox>
+
+<!-- Código RCA -->
+<div style="display:flex; flex-direction:column; max-width:220px; flex:1;">
+<label style="font-size:12px; color:#555; margin-bottom:2px;">
+ Código RCA
+</label>
+<input matInput formControlName="Cod_RCA">
+</div>
+
+<!-- Código Problem (readonly) -->
+<div *ngIf="shouldShowCodProblem()" style="display:flex; flex-direction:column; max-width:220px; flex:1;">
+<label style="font-size:12px; color:#555; margin-bottom:2px;">
+ Código Problem
+</label>
+<input matInput
+      formControlName="Cod_Problem"
+      readonly
+      style="background:#f3f3f3;">
+</div>
+
+<!-- Botão Selecionar / Cadastrar -->
+<button *ngIf="shouldShowCodProblem()"
+     mat-stroked-button
+     color="primary"
+     type="button"
+     (click)="openProblemPopup()"
+     style="height: 36px; align-self: flex-end;">
+Selecionar / Cadastrar Problem
+</button>
+
+<!-- Botões Salvar e Cancelar -->
+<div style="display:flex; gap:8px;">
+<button mat-raised-button color="primary" type="submit" [disabled]="!canSave()">
+ Salvar
+</button>
+<button mat-raised-button color="warn" type="button" (click)="voltar()">
+ Cancelar/Voltar
+</button>
+</div>
+ 
+
+
+</div>
+
+ 
+
+  </form>
+</div>

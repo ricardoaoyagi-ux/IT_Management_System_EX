@@ -1,0 +1,143 @@
+    <div class="container">
+
+      <h2>Capacity Planner</h2>
+
+      <!-- Filtros -->
+      <form [formGroup]="filtroForm" class="filtros"> 
+
+  <!-- Grupo -->
+  <mat-form-field appearance="fill">
+    <mat-label>Grupo</mat-label>
+    <mat-select formControlName="grupo">
+      <mat-option value="TODOS">Todos</mat-option>
+      <mat-option value="SUSTAIN">Sustain</mat-option>
+      <mat-option value="PROJETOS">Projetos</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Período -->
+  <mat-form-field appearance="fill">
+    <mat-label>Período</mat-label>
+    <mat-select formControlName="periodo">
+      <mat-option value="DIARIO">Diário</mat-option>
+      <mat-option value="SEMANAL">Semanal</mat-option>
+      <mat-option value="MENSAL">Mensal</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Visão -->
+  <mat-form-field>
+    <mat-label>Visão</mat-label>
+    <mat-select formControlName="visao">
+      <mat-option value="ANALISTA">Por Analista</mat-option>
+      <mat-option value="PROJETO">Por Projeto</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+<!-- 🔥 Filtro de Status (fora do mat-form-field) -->
+<div formGroupName="statusProjetos"
+     class="status-filtro"
+     [hidden]="filtroForm.get('visao')?.value !== 'PROJETO'">
+
+  <mat-checkbox formControlName="PLANEJADO">
+    Planejado
+  </mat-checkbox>
+
+  <mat-checkbox formControlName="EM_ANDAMENTO">
+    Em andamento
+  </mat-checkbox>
+
+  <mat-checkbox formControlName="CONCLUIDO">
+    Concluído
+  </mat-checkbox>
+
+  <mat-checkbox formControlName="CANCELADO">
+    Cancelado
+  </mat-checkbox>
+
+</div>
+ 
+</form>
+
+      <!-- Navegação -->
+      <div class="navegacao">
+        <button mat-raised-button (click)="mesAnterior()">«</button>
+
+        <span class="mes-central">
+          {{ mesBase | date:'MMM/yyyy':'':'pt-BR' }}
+        </span>
+
+        <button mat-raised-button (click)="mesSeguinte()">»</button>
+      </div>
+
+      <!-- Tabela -->
+      <div class="tabela-wrapper">
+        <table class="planner-table">
+          <thead>
+            <tr>
+              <th rowspan="2">Grupo</th>
+              <th rowspan="2">Nome</th>
+
+              <th *ngFor="let mes of mesesVisiveis; let i = index"
+                  [attr.colspan]="mes.grupos.length">
+                {{ filtroForm.value.periodo === 'MENSAL' && i > 0 ? '' : mes.label }}
+              </th>
+            </tr>
+
+            <tr>
+              <ng-container *ngFor="let mes of mesesVisiveis">
+                <th *ngFor="let grupo of mes.grupos">
+                  {{ grupo.label }}
+                </th>
+              </ng-container>
+            </tr>
+          </thead>
+
+          <tbody> 
+
+<tr *ngFor="let linha of linhasFiltradas"
+    [ngClass]="linha.tipo === 'PROJETO' ? { 
+      'status-planejado': linha.status === 'PLANEJADO',
+      'status-em_andamento': linha.status === 'EM_ANDAMENTO',
+      'status-concluido': linha.status === 'CONCLUIDO',
+      'status-cancelado': linha.status === 'CANCELADO'
+    } : null">
+
+              <td>{{ linha.grupo }}</td>
+<td>
+  <span
+    *ngIf="linha.tipo === 'PROJETO'; else nomeNormal"
+    class="projeto-link"
+    (click)="abrirResumoProjeto(linha)">
+    {{ linha.nome }}
+  </span>
+
+  <ng-template #nomeNormal>
+    {{ linha.nome }}
+  </ng-template>
+</td>
+
+              <ng-container *ngFor="let mes of mesesVisiveis">
+              <td *ngFor="let grupo of mes.grupos"
+                  class="celula"
+                  [matTooltip]="getTooltipIfNeeded(grupo, linha)"
+                      matTooltipPosition="above"
+                  [class.overbook]="isOverbook(grupo, linha)"
+                  [class.under]="isUnder(grupo, linha)"
+                  [class.F]="getStatusDiario(grupo, linha) === 'F'"
+                  [class.A]="getStatusDiario(grupo, linha) === 'A'"
+                  [class.L]="getStatusDiario(grupo, linha) === 'L'"
+                  [class.FD]="getStatusDiario(grupo, linha) === 'FD'"
+                  [class.fds]="filtroForm.value.periodo === 'DIARIO' && isFimDeSemana(grupo.dias[0])">
+
+                {{ getValorCelula(grupo, linha) }}
+
+              </td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>

@@ -1,0 +1,115 @@
+<div class="container">
+
+    <h2>Relatório de Justificativas</h2>
+  
+    <!-- ABAS -->
+    <mat-tab-group (selectedIndexChange)="onTabChange($event)">
+      <mat-tab label="Pendentes x Realizados"></mat-tab>
+      <mat-tab label="Principais Motivos"></mat-tab>
+      <mat-tab label="Analistas Ofensores"></mat-tab>
+    </mat-tab-group>
+  
+    <!-- FILTROS -->
+    <form [formGroup]="form" class="filtros">
+      <mat-form-field appearance="outline" class="filtro-field">
+        <mat-label>Métrica</mat-label>
+        <mat-select formControlName="tipo">
+          <mat-option value="TODOS">Todos</mat-option>
+          <mat-option value="SLA">SLA</mat-option>
+          <mat-option value="REABERTURA">Reabertura</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="filtro-field">
+        <mat-label>Período</mat-label>
+        <mat-select formControlName="periodo">
+          <mat-option value="3m">Últimos 3 meses</mat-option>
+          <mat-option value="mes">Este mês</mat-option>
+          <mat-option value="personalizado">Personalizado</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <mat-form-field
+        *ngIf="form.get('periodo')?.value === 'personalizado'"
+        appearance="outline"
+        class="filtro-field">
+        <mat-label>De</mat-label>
+        <input matInput type="date" formControlName="dataInicio">
+      </mat-form-field>
+  
+      <mat-form-field
+        *ngIf="form.get('periodo')?.value === 'personalizado'"
+        appearance="outline"
+        class="filtro-field">
+        <mat-label>Até</mat-label>
+        <input matInput type="date" formControlName="dataFim">
+      </mat-form-field>
+  
+    </form>
+  
+    <!-- BOTÕES -->
+    <div class="botoes-filtro">
+      <button mat-raised-button color="primary" (click)="buscar()">
+        Buscar
+      </button>
+  
+      <button mat-raised-button color="warn" (click)="limpar()">
+        Limpar
+      </button>
+  
+      <button mat-raised-button color="accent" (click)="exportarExcel()">
+        Exportar Excel
+      </button>
+    </div>
+  
+    <!-- TABELA -->
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+  
+      <!-- Analista -->
+      <ng-container matColumnDef="analista">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Lider</th>
+        <td mat-cell *matCellDef="let e">{{ e.analista }}</td>
+      </ng-container>
+  
+      <!-- Pendentes -->
+      <ng-container matColumnDef="pendentes">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Pendentes</th>
+        <td mat-cell *matCellDef="let e">{{ e.pendentes }}</td>
+      </ng-container>
+  
+      <!-- Realizados -->
+      <ng-container matColumnDef="feitas">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Realizados</th>
+        <td mat-cell *matCellDef="let e">{{ e.feitas }}</td>
+      </ng-container>
+  
+      <!-- Mês -->
+      <ng-container matColumnDef="mes">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mês</th>
+        <td mat-cell *matCellDef="let e">{{ e.mes }}</td>
+      </ng-container>
+  
+      <!-- Motivo -->
+      <ng-container matColumnDef="motivo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Motivo</th>
+        <td mat-cell *matCellDef="let e">{{ e.motivo }}</td>
+      </ng-container>
+  
+      <!-- Quantidade -->
+      <ng-container matColumnDef="quantidade">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantidade</th>
+        <td mat-cell *matCellDef="let e">{{ e.quantidade }}</td>
+      </ng-container>
+  
+      <!-- Total -->
+      <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
+        <td mat-cell *matCellDef="let e">{{ e.total }}</td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+    </table>
+  
+  </div>
+  

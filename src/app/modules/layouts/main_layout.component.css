@@ -1,0 +1,141 @@
+.top-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #1f2937;
+  padding: 0 30px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.top-menu > ul {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+  margin: 0;
+  padding: 0 30px;
+  width: 100%;
+  align-items: center;
+}
+
+/* Item padrão do menu */
+.top-menu li {
+  position: relative;
+  color: #fff;
+}
+
+/* Label do menu */
+.top-menu span {
+  display: block;
+  padding: 15px 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Dropdown fechado */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #ffffff;
+  min-width: 200px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+  padding: 8px 0;
+  z-index: 2000;
+}
+
+/* Links dentro do dropdown */
+.dropdown-menu a {
+  display: block;
+  padding: 10px 16px;
+  color: #1f2937;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.dropdown-menu a:hover {
+  background: #f3f4f6;
+}
+
+/* Abrir dropdown ao passar o mouse */
+.top-menu li.dropdown:hover > .dropdown-menu {
+  display: block;
+}
+
+/* MENU DO USUÁRIO fica no canto direito */
+.top-menu li.user-menu {
+  margin-left: auto;
+  position: relative; /* importante para dropdown */
+}
+
+/* Ajustar dropdown do usuário para alinhar à direita */
+.top-menu li.user-menu .dropdown-menu {
+  right: 0;
+  left: auto;
+}
+/* Ajuste para o texto do usuário */
+.top-menu li.user-menu > span {
+  padding: 15px 20px 15px 10px; /* aumenta padding-right para 20px */
+  white-space: nowrap;
+  display: block;
+}
+
+/* Estilo básico do dropdown */
+/* Menu pai e dropdown geral */
+.dropdown-menu, .dropdown-submenu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-menu li, .dropdown-submenu li {
+  position: relative;
+}
+
+/* Item pai do submenu */
+.submenu {
+  position: relative; 
+  font-size: 14px;
+}
+
+/* Mostra o submenu ao passar o mouse sobre o item pai */
+.submenu:hover  {
+  background: #f3f4f6;
+}
+
+/* Faz o span do submenu ser clicável e visível */
+.submenu-title {
+  display: block;
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #000000; 
+}
+
+/* Esconde o submenu por padrão */
+.dropdown-submenu {
+  display: none;
+  position: absolute; /* flutua à direita do item pai */
+  left: 100%;        /* posiciona à direita */
+  top: 0;
+  background: white;
+  border: 1px solid #ccc;
+  min-width: 200px;
+  z-index: 1000;
+}
+
+/* Mostra o submenu ao passar o mouse sobre o item pai */
+.submenu:hover .dropdown-submenu {
+  display: block;
+}
+
+/* Links do menu */
+.dropdown-menu a, .dropdown-submenu a {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: black;
+} 

@@ -1,0 +1,17 @@
+<div class="mfa-verify-container">
+  <h2>Autenticação de Dois Fatores</h2>
+  <p>Digite o código do seu app de autenticação:</p>
+
+  <form [formGroup]="form" (ngSubmit)="verifyTOTP()">
+    <mat-form-field>
+      <mat-label>Código TOTP</mat-label>
+      <input matInput formControlName="code" maxlength="6" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+      Verificar
+    </button>
+  </form>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+</div>

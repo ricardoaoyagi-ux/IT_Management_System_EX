@@ -1,0 +1,131 @@
+<div class="container">
+    <h2>Problems</h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-problems">
+      <mat-form-field>
+        <input matInput placeholder="Código do Problem" formControlName="Cod_Problem" type="number">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input matInput placeholder="Nome" formControlName="Nom_Problem">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Descrição</mat-label>
+        <input matInput placeholder="Descrição" formControlName="Desc_Problem">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Abertura</mat-label>
+        <input matInput placeholder="Abertura" formControlName="Dt_Abertura" type="date">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Encerramento</mat-label>
+        <input matInput placeholder="Encerramento" formControlName="Dt_Encerramento" type="date">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Status</mat-label>
+        <input matInput placeholder="Status" formControlName="Status" type="number">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Tipo</mat-label>
+        <input matInput placeholder="Tipo" formControlName="Tip_Problem" type="number">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>PM CLIENTE</mat-label>
+        <input matInput placeholder="PM CLIENTE" formControlName="PM_CLIENTE">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Analista Cadastro</mat-label>
+        <input matInput placeholder="Analista Cadastro" formControlName="Analista_Cadastro">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Analista Responsável</mat-label>
+        <input matInput placeholder="Analista Responsável" formControlName="Analista_Responsavel">
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">
+        {{ editingId ? 'Atualizar' : 'Adicionar' }}
+      </button>
+
+      <button *ngIf="editingId" mat-raised-button color="warn" type="button" (click)="cancelarEdicao()">
+        Cancelar
+      </button>
+    </form>
+
+    <table mat-table [dataSource]="lista" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="Id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.Id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Cod_Problem">
+        <th mat-header-cell *matHeaderCellDef> Código </th>
+        <td mat-cell *matCellDef="let element"> {{element.Cod_Problem}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Nom_Problem">
+        <th mat-header-cell *matHeaderCellDef> Nome </th>
+        <td mat-cell *matCellDef="let element"> {{element.Nom_Problem}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Desc_Problem">
+        <th mat-header-cell *matHeaderCellDef> Descrição </th>
+        <td mat-cell *matCellDef="let element"> {{element.Desc_Problem}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Dt_Abertura">
+        <th mat-header-cell *matHeaderCellDef> Abertura </th>
+        <td mat-cell *matCellDef="let element"> {{element.Dt_Abertura}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Dt_Encerramento">
+        <th mat-header-cell *matHeaderCellDef> Encerramento </th>
+        <td mat-cell *matCellDef="let element"> {{element.Dt_Encerramento}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Tip_Problem">
+        <th mat-header-cell *matHeaderCellDef> Tipo </th>
+        <td mat-cell *matCellDef="let element"> {{element.Tip_Problem}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="PM_CLIENTE">
+        <th mat-header-cell *matHeaderCellDef> PM CLIENTE </th>
+        <td mat-cell *matCellDef="let element"> {{element.PM_CLIENTE}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Analista_Cadastro">
+        <th mat-header-cell *matHeaderCellDef> Analista Cadastro </th>
+        <td mat-cell *matCellDef="let element"> {{element.Analista_Cadastro}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Analista_Responsavel">
+        <th mat-header-cell *matHeaderCellDef> Analista Responsável </th>
+        <td mat-cell *matCellDef="let element"> {{element.Analista_Responsavel}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Ações </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button color="accent" (click)="editar(element)">Editar</button>
+          <button mat-button color="warn" (click)="deletar(element.Id)">Excluir</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>

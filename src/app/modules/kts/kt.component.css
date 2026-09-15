@@ -1,0 +1,16 @@
+    .header-agenda {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+    .sidenav-container { height: 100vh;   }
+    .main-content { padding: 20px; padding-top: 60px; }
+    mat-form-field { width: 100%; margin-bottom: 10px; display: block; }
+    table { width: 100%; cursor: pointer; }
+    .clickable { cursor: pointer; color: #1976d2; text-decoration: underline; }
+    .drawer { width: 50vw; max-width: 600px;  padding: 60px; }
+    .drawer-content { padding: 20px; }
+    section { margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+    .drawer-buttons { display: flex; gap: 10px; margin-top: 20px; }
+  

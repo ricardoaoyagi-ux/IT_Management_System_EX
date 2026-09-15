@@ -1,0 +1,107 @@
+<nav class="top-menu">
+  <ul>
+    <li class="dropdown" *ngIf="isAdmin || isLider || isAnalista">
+      <span>1.Sustain</span>
+      <ul class="dropdown-menu">
+        <li *ngIf="isAdmin || isLider || isAnalista">
+          <a routerLink="/app/incidente">1.1.Incidente</a>
+        </li>
+    
+        <li *ngIf="isAdmin || isLider || isAnalista">
+          <a routerLink="/app/problems">1.2.Problems</a>
+        </li>
+    
+        <li *ngIf="isAdmin || isLider || isAnalista">
+          <a routerLink="/app/rca">1.3.RCA</a>
+        </li>
+    
+        <li *ngIf="isAdmin || isLider || isAnalista">
+          <a routerLink="/app/justificativa-sla">
+            1.4.Justificativa SLA
+          </a>
+        </li>
+        
+        <li *ngIf="isAdmin || isLider || isAnalista">
+          <a routerLink="/app/justificativa-reabertura">
+            1.5.Justificativa Reabertura
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="dropdown" *ngIf="isAdmin ">
+      <span>2.Cadastros</span>
+      <ul class="dropdown-menu">
+        <li><a routerLink="/app/sistema">2.1.Sistema</a></li>
+        <li><a routerLink="/app/modulo">2.2.Módulo</a></li>
+        <li><a routerLink="/app/agrupamento">2.3.Agrupamento</a></li> 
+        <li><a routerLink="/app/sub_agrupamento">2.4.Sub Agrupamento</a></li>
+        <li><a routerLink="/app/sub_subagrupamento">2.5.Sub SubAgrupamento</a></li>
+      </ul>
+    </li>
+
+    <li class="dropdown" *ngIf="isAdmin || isLider">
+      <span>3.Gestão</span>
+      <ul class="dropdown-menu">
+        <li><a routerLink="/app/analistas">3.1.Analistas</a></li>
+        <li><a routerLink="/app/ferias">3.2.Férias</a></li>
+        <li><a routerLink="/app/plantao">3.3.Plantão</a></li>
+        <li><a routerLink="/app/skills">3.4.Skills</a></li>
+        <li><a routerLink="/app/kt">3.5.KTs</a></li>
+        <li><a routerLink="/app/timebox">3.6.TIMEBOX</a></li>
+        <li><a routerLink="/app/calendario">3.7.CapacityPlanner</a></li>
+      </ul>
+    </li>
+
+    <li class="dropdown" *ngIf="isAdmin || isBackOffice">
+      <span>4.Interna</span>
+      <ul class="dropdown-menu">
+        <li *ngIf="isAdmin"><a routerLink="/app/alocacao">4.01.Alocação</a></li>
+        <li *ngIf="isAdmin"><a routerLink="/app/user">4.02.Cadastro Usuarios</a></li>  
+        <li *ngIf="isAdmin  || isBackOffice"><a routerLink="/app/carga">4.03.Carga</a></li>
+        <li *ngIf="isAdmin"><a routerLink="/app/inc_problem">4.04.Inc. Problem</a></li>
+        <li *ngIf="isAdmin"><a routerLink="/app/rates">4.05.Rates</a></li>
+        <li *ngIf="isAdmin"><a routerLink="/app/senioridade">4.06.Senioridade</a></li>
+        <li *ngIf="isAdmin"><a routerLink="/app/status_problem">4.07.Status Problem</a></li>
+        <li *ngIf="isAdmin"><a routerLink="/app/tip_problem">4.08.Tipo Problem</a></li>
+        <li *ngIf="isAdmin"><a routerLink="/app/motivo-justificativa">4.09.Motivos Justificativa</a></li>
+         
+    <!-- Submenu Checklists -->
+    <li class="submenu" *ngIf="isAdmin">
+      <span class="submenu-title">4.10.Relatorios   > </span>
+      <ul class="dropdown-submenu">
+        <li><a routerLink="/app/checklists">4.10.1.Checklists Pendentes</a></li>
+        <li><a routerLink="/app/problemreports">4.10.2.Relatorio Problems</a></li>
+        <li><a routerLink="/app/justificativareports">4.10.3.Relatorio Justificativas</a></li>
+      </ul>
+    </li>
+
+      </ul>
+    </li>
+
+    <li class="dropdown" *ngIf="isAdmin || isRH">
+      <span>6.RH</span>
+      <ul class="dropdown-menu">
+        <li><a routerLink="/app/carga-horas">6.1.Carga Horas</a></li>
+        <li><a routerLink="/app/validador-horas">6.2.Validador</a></li>
+        <li><a routerLink="/app/candidatos">6.3.Candidatos/Entrevistas</a></li>
+      </ul>
+    </li>
+
+
+
+    <li class="dropdown user-menu">
+      <span>{{ usuario }}</span>
+      <ul class="dropdown-menu">
+        <li><a href="javascript:void(0)" (click)="trocarSenha()">Trocar senha</a></li>
+        <li><a href="javascript:void(0)" (click)="logout()">Deslogar</a></li>
+      </ul>
+    </li>
+</ul>
+
+</nav>
+
+<!-- conteúdo das páginas -->
+<div class="page-content">
+  <router-outlet></router-outlet>
+</div>

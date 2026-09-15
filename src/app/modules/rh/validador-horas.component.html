@@ -1,0 +1,95 @@
+<div class="container">
+
+  <!-- Filtros -->
+  <div class="filtro-container">
+    <select [(ngModel)]="usuarioSelecionado">
+      <option value="">Selecione usuário</option>
+      <option *ngFor="let u of usuarios" [value]="u.email">{{u.nome}}</option>
+    </select>
+
+    <select [(ngModel)]="periodoSelecionado">
+      <option value="">Selecione período</option>
+      <option *ngFor="let p of periodos" [value]="p">{{p}}</option>
+    </select>
+
+    <button mat-raised-button color="primary" (click)="aplicarFiltro()">Aplicar</button>
+  </div>
+
+  <!-- Cabeçalho dos dias da semana -->
+  <div class="calendario">
+    <div *ngFor="let diaSemana of diasSemana" class="dia-semana">
+      {{ diaSemana }}
+    </div>
+
+    <!-- Dias do mês com espaços para alinhamento -->
+    <ng-container *ngFor="let dia of diasMesComEspacos">
+
+
+
+<div class="dia-card" *ngIf="dia; else emptyDia">
+  <div class="dia-numero">{{ dia.split('-')[2] }}</div>
+
+<div *ngFor="let grupo of organizarEventos(dia)" class="grupo-eventos">
+
+  <div
+    *ngFor="let ev of grupo"
+    class="evento"
+    [ngClass]="{'pausa': ev.tipo === 'Pausa'}"
+    [style.background]="getCorEvento(ev)"
+  > 
+  {{ getStatusIcon(ev).icone }} 
+    {{ ev.tipo }} {{ ev.inicio }} - {{ ev.fim }}
+  </div>
+
+</div>
+</div>
+
+
+
+      <ng-template #emptyDia>
+        <div class="empty-card"></div>
+      </ng-template>
+    </ng-container>
+  </div>
+
+</div>
+
+<div class="legenda">
+
+  <h3>Legenda</h3>
+
+  <!-- STATUS -->
+  <div class="legenda-bloco">
+    <strong>Status:</strong>
+
+    <div class="legenda-item">
+      <span class="icone">✅</span> Lançamento Aprovado
+    </div>
+
+    <div class="legenda-item">
+      <span class="icone">⚠️</span> Pendente de Aprovação
+    </div>
+
+    <div class="legenda-item">
+      <span class="icone">❌</span> Recusado pelo Gestor
+    </div>
+  </div>
+
+  <!-- TIPOS -->
+  <div class="legenda-bloco">
+    <strong>Tipos de Evento:</strong>
+
+    <div class="legenda-item">
+      <span class="cor-box standby"></span> StandBy
+    </div>
+
+    <div class="legenda-item">
+      <span class="cor-box extra"></span> Hora Extra
+    </div>
+
+    <div class="legenda-item">
+      <span class="cor-box pausa"></span> Pausa
+    </div>
+  </div>
+
+</div>

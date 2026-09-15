@@ -1,0 +1,215 @@
+<mat-sidenav-container class="sidenav-container">
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <mat-sidenav-content>
+  
+      <div class="container">
+  
+        <mat-toolbar color="primary" class="toolbar-search">
+            <span class="toolbar-title">Skills</span>
+          </mat-toolbar>
+          
+          <!-- Linha de filtros / dropdowns abaixo do título -->
+          <div class="toolbar-filters">
+            <mat-form-field appearance="outline" class="search-dropdown">
+              <mat-label>Busca 1</mat-label>
+              <mat-select [(value)]="selectedSkills[0]" (selectionChange)="onSkillChange(0)">
+                <mat-option *ngFor="let skill of dropdownOptions[0]" [value]="skill">
+                  {{ skill }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          
+            <mat-form-field appearance="outline" class="search-dropdown" *ngIf="selectedSkills[0]">
+              <mat-label>Busca 2</mat-label>
+              <mat-select [(value)]="selectedSkills[1]" (selectionChange)="onSkillChange(1)">
+                <mat-option *ngFor="let skill of dropdownOptions[1]" [value]="skill">
+                  {{ skill }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          
+            <mat-form-field appearance="outline" class="search-dropdown" *ngIf="selectedSkills[1]">
+              <mat-label>Busca 3</mat-label>
+              <mat-select [(value)]="selectedSkills[2]" (selectionChange)="onSkillChange(2)">
+                <mat-option *ngFor="let skill of dropdownOptions[2]" [value]="skill">
+                  {{ skill }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          
+            <button mat-raised-button color="accent" class="btn-search" (click)="onSearch()">Pesquisar</button>
+            <button mat-stroked-button color="warn" class="btn-clear" (click)="onLimpar()">Limpar</button>
+          </div>
+          
+          <!-- Filtro por nome -->
+          <div class="toolbar-filters">
+<mat-form-field appearance="outline" class="search-input">
+    <mat-label>Filtrar por Nome</mat-label>
+    <input matInput [(ngModel)]="filtroNome" (ngModelChange)="aplicarFiltro()" placeholder="Digite o nome do analista">
+    <button *ngIf="filtroNome" matSuffix mat-icon-button aria-label="Limpar" (click)="onReset()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>          
+</div>
+          
+  
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="listaFiltrada" class="mat-elevation-z8 compact-table">
+  
+            <ng-container matColumnDef="Matricula">
+              <th mat-header-cell *matHeaderCellDef>Matrícula</th>
+              <td mat-cell *matCellDef="let e">{{ e.Matricula }}</td>
+            </ng-container>
+  
+            <ng-container matColumnDef="Nom_Analista">
+              <th mat-header-cell *matHeaderCellDef>Analista</th>
+              <td mat-cell *matCellDef="let e">{{ e.Nom_Analista }}</td>
+            </ng-container>
+
+<!-- Colunas de skills dinâmicas -->
+<ng-container *ngFor="let col of skillColumns" [matColumnDef]="col">
+    <th mat-header-cell *matHeaderCellDef>{{ col }}</th>
+    <td mat-cell *matCellDef="let e" 
+        [ngClass]="{
+          'skill-3': e[col] === 3,
+          'skill-4': e[col] === 4,
+          'skill-5': e[col] === 5
+        }">
+      {{ e[col] }}
+    </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="media">
+    <th mat-header-cell *matHeaderCellDef>Média</th>
+    <td mat-cell *matCellDef="let e"
+    [ngClass]="{
+      'skill-3': +e.media >= 3 && +e.media < 4,
+      'skill-4': +e.media >= 4 && +e.media < 5,
+      'skill-5': +e.media === 5
+    }">{{ (+e.media ? +e.media : 0).toFixed(2) }}</td>
+
+  </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Ações</th>
+              <td mat-cell *matCellDef="let e">
+                <button mat-button color="primary" (click)="visualizar(e)">
+                  Visualizar
+                </button>
+              </td>
+            </ng-container>
+  
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+          </table>
+        </div>
+  
+      </div>
+  
+    </mat-sidenav-content>
+  
+    <!-- CARD LATERAL -->
+    <mat-sidenav
+    mode="side"
+    position="end"
+    [opened]="selectedSkill !== null"
+    class="sidenav"
+  >
+  
+    <!-- Toolbar simples -->
+    <mat-toolbar color="primary">
+      <span>Skills</span>
+      <span class="spacer"></span>
+      <button mat-icon-button (click)="fecharCard()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
+  
+    <form *ngIf="form" [formGroup]="form" class="card-content">
+  
+      <!-- HEADER DO CARD -->
+      <!-- HEADER DO CARD -->
+<div class="card-header">
+
+    <!-- Coluna esquerda: info -->
+    <div class="header-info" >
+      <div><strong>Matrícula:</strong> {{ form.get('Matricula')?.value }}</div>
+      <div><strong>Nome:</strong> {{ form.get('Nom_Analista')?.value }}</div>
+     <div 
+      [ngClass]="{
+        'skill-3': +form.get('media')?.value >= 3 && +form.get('media')?.value < 4,
+        'skill-4': +form.get('media')?.value >= 4 && +form.get('media')?.value < 5,
+        'skill-5': +form.get('media')?.value === 5
+      }"> 
+      
+      <strong>Media:</strong> {{ (+form.get('media')?.value ? +form.get('media')?.value : 0).toFixed(2) }}
+      </div> 
+    </div>
+  
+    <!-- Coluna direita: hexágono -->
+    <div class="header-hexagon">
+      <canvas
+        baseChart
+        [type]="'radar'"
+        [data]="radarData"
+        [options]="radarOptions">
+      </canvas>
+    </div>
+  
+  </div>
+  
+  <!-- Ações do card -->
+  <div class="header-actions">
+    <button mat-raised-button color="primary" (click)="salvar()">Salvar</button>
+    <button mat-button (click)="fecharCard()">Cancelar</button>
+    <button mat-button color="warn" (click)="excluir()">Excluir</button>
+  </div>
+  
+  
+      <!-- GRID DE SKILLS -->
+      <div class="skills-grid">
+  
+        <div class="skill-item" *ngFor="let campo of camposOrdenados"
+        [ngClass]="{
+            'skill-3': form.get(campo)?.value === 3,
+            'skill-4': form.get(campo)?.value === 4,
+            'skill-5': form.get(campo)?.value === 5
+          }">
+          <span class="skill-label">{{ campo }}</span>
+  
+          <div class="skill-controls">
+            <button mat-icon-button (click)="decrementar(campo)">
+              <mat-icon>remove</mat-icon>
+            </button>
+ 
+            <span class="skill-value">
+              {{ form.get(campo)?.value }}
+            </span>
+            
+              <!-- Barra de progresso  
+              <mat-progress-bar
+              [value]="getSkillPercent(form.get(campo)?.value)"
+              mode="determinate"
+              [color]="getSkillColor(form.get(campo)?.value)"
+              class="skill-bar">
+              
+            </mat-progress-bar>
+            -->
+            
+  
+            <button mat-icon-button (click)="incrementar(campo)">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
+  
+      </div>
+  
+    </form>
+  </mat-sidenav>
+  
+  
+  </mat-sidenav-container>
+  
