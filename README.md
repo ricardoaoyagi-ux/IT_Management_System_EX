@@ -77,3 +77,7 @@ ng serve --open
 The application opens at `http://localhost:4200`. On the login screen, select the account matching the database you created.
 
 > Windows shortcut: `sig.bat` starts both backend and frontend.
+
+## License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
